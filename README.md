@@ -1,2 +1,6 @@
-# TP-Programaci-n2
-Biblioteca de clases - TRUCO
+# TP-Programación2
+--------------------------------------------------
+###Integrantes:
+* Bruno, Ordoñez, Agustina.
+* Didoné, Lucas.
+* Monier, Guillermo.
