@@ -1,6 +1,6 @@
 # TP-Programación2
 --------------------------------------------------
-# Integrantes:
+### Integrantes:
 * Bruno, Ordoñez, Agustina.
 * Didoné, Lucas.
 * Monier, Guillermo.
