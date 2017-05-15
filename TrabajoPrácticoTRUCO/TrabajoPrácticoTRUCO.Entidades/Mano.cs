@@ -12,14 +12,47 @@ namespace TrabajoPrácticoTRUCO.Entidades
     public class Mano
     {
         public Participantes TieneLaMano { get; set; }
-        private List<Carta> Caartas { get; set; } //VER
 
-        public Mano(List<Carta> cartas)
+        public Mano()
         {
-            Caartas = cartas; //ver
+            Inicia();
         }
 
+        internal List<Jugador> Repartir(List<Carta> cartas, List<Jugador> jugadores)
+        {
+            int indice = 0;
+            foreach (var jugador in jugadores)
+            {               
+                for (int i = 0; i < 2; i++)
+                {
+                    jugador.Cartas.Add(cartas[indice]);
+                    indice++;
+                }
+            }
+            return jugadores;
+        }
 
+        private void Inicia()
+        {
+            Random random = new Random();
+            int indice = random.Next(0, 3);
+            TieneLaMano = (Participantes)indice;
+        } 
+
+        internal void PasarMano()
+        {
+            var indJugador = (int)TieneLaMano;
+            if (indJugador==3)
+            {
+                indJugador = 0;
+            }
+            else
+            {
+                indJugador++;
+            }
+            TieneLaMano = (Participantes)indJugador;
+        } 
         
+                    
     }
 }

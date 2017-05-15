@@ -55,6 +55,7 @@
     <Compile Include="MazoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PartidaTest.cs" />
+    <Compile Include="ManoTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrabajoPrácticoTRUCO.Entidades\TrabajoPrácticoTRUCO.Entidades.csproj">

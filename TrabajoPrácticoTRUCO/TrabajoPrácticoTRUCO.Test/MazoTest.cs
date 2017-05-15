@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrabajoPrácticoTRUCO.Entidades;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TrabajoPrácticoTRUCO.Test
 {
@@ -16,7 +17,7 @@ namespace TrabajoPrácticoTRUCO.Test
             //Act
             var cartas = mazo.ObtenerMazo();
             //Assert
-            Assert.AreEqual(cartas.Count, 40);
+            Assert.AreEqual(cartas.Count(), 40);
         }
 
         [TestMethod]

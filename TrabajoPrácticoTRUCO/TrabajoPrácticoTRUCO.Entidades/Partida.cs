@@ -48,9 +48,9 @@ namespace TrabajoPrácticoTRUCO.Entidades
         {
             if (HayGanador==false)
             {
-                Mano nuevamano = new Mano(mazo.ObtenerMazo());
-                //nuevamano.Caartas = mazo.Cartas;
-                //lista = nuevamano.MezclarMazo(mazo.ObtenerMazo());
+                Mano nuevamano = new Mano();
+                nuevamano.PasarMano();
+                this.Jugadores = nuevamano.Repartir(mazo.MezclarMazo(),this.Jugadores);   
             }
         }
     }
