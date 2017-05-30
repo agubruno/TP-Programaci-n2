@@ -18,6 +18,10 @@ namespace TrabajoPrácticoTRUCO.Entidades
         }
 
         internal palos Palo { get; }
+<<<<<<< HEAD
         internal int Numero { get;  }
+=======
+        internal int Numero { get; }
+>>>>>>> origin/master
     }
 }
