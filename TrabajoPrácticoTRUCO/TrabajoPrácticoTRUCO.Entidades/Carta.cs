@@ -11,7 +11,13 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
     public class Carta
     {
-        internal palos Palo { get; set; }
-        internal int Numero { get; set; }
+        public Carta(palos palo, int numero)
+        {
+            this.Palo = palo;
+            this.Numero = numero;
+        }
+
+        internal palos Palo { get; }
+        internal int Numero { get;  }
     }
 }
