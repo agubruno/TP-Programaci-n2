@@ -33,13 +33,8 @@ namespace TrabajoPrácticoTRUCO.Entidades
                 {
                     if (j != 8 && j != 9)
                     {
-<<<<<<< HEAD
                         Carta carta = new Carta((palos)i,j);                        
                         Cartas.Add(carta);                                                                                                         
-=======
-                        Carta carta = new Carta((palos)i,j);                       
-                        Cartas.Add(carta);
->>>>>>> origin/master
                     }
                 }
             }
@@ -50,10 +45,6 @@ namespace TrabajoPrácticoTRUCO.Entidades
             Random random = new Random();
             int indice = 0;
             int indice1 = 0;
-<<<<<<< HEAD
-=======
-            
->>>>>>> origin/master
             for (int i = 0; i < 40; i++)
             {
                 indice = random.Next(0, 39);

@@ -134,18 +134,29 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Index.html" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
+    <Content Include="Scripts\truco.logica.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Hubs\TrucoClean.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="content\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TrabajoPrácticoTRUCO\TrabajoPrácticoTRUCO.Entidades\TrabajoPrácticoTRUCO.Entidades.csproj">
+      <Project>{d3d62533-d40e-4817-9924-8d2e2a04de4a}</Project>
+      <Name>TrabajoPrácticoTRUCO.Entidades</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

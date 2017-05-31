@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPrácticoTRUCO.Entidades
 {
+    
     public class Partida
     {
         public Mazo mazo { get; set; }
@@ -21,27 +22,38 @@ namespace TrabajoPrácticoTRUCO.Entidades
             for (int i = 0; i < 4; i++)
             {
                 Jugador jugador = new Jugador();
+                if (i == 0 || i == 2)
+                {
+                    jugador.Equipo = 1;
+                }
+                else
+                {
+                    jugador.Equipo = 2;
+                }
                 Jugadores.Add(jugador);
             }
             HayGanador = false;     
         }
-        public void ArmarEquipos()
+
+        public bool AgregarJugador(string nombre)
         {
-            Random random = new Random();
-            int indice1 = random.Next(0, 3);
-            int indice2 = random.Next(0, 3);
-            if (indice1!=indice2)
+            int cont = 0;
+            foreach (var jugador in Jugadores)
             {
-                Jugadores[indice1].Equipo= 1;
-                Jugadores[indice2].Equipo = 1;
-                foreach (var jugador in Jugadores)
+                if (jugador.Nombre == "")
                 {
-                    if (jugador.Equipo==0)
+                    Random random = new Random();
+                    int indice = random.Next(0, 3);
+                    while (Jugadores[indice].Nombre != "")
                     {
-                        jugador.Equipo = 2;
+                        indice = random.Next(0, 3);
                     }
+                    Jugadores[indice].Nombre = nombre;
+                    Jugadores[indice].NombreInterno = "user" + cont.ToString();
+                    return true;
                 }
-            }       
+            }
+            return false;
         }
 
         public void NuevaMano()
