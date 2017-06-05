@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Truco.web", "Truco.web\Truc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoPrácticoTRUCO.Entidades", "..\TrabajoPrácticoTRUCO\TrabajoPrácticoTRUCO.Entidades\TrabajoPrácticoTRUCO.Entidades.csproj", "{D3D62533-D40E-4817-9924-8D2E2A04DE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoPrácticoTRUCO.Test", "..\..\..\..\..\Desktop\Comparar cartas y calcular envido\TP-Programaci-n2\TrabajoPrácticoTRUCO\TrabajoPrácticoTRUCO.Test\TrabajoPrácticoTRUCO.Test.csproj", "{199AD004-8AD2-4A42-AA77-4B639C1679D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrabajoPrácticoTRUCO.Test", "..\TrabajoPrácticoTRUCO\TrabajoPrácticoTRUCO.Test\TrabajoPrácticoTRUCO.Test.csproj", "{199AD004-8AD2-4A42-AA77-4B639C1679D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

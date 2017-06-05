@@ -11,13 +11,7 @@ namespace TrabajoPrácticoTRUCO.Test
         [TestMethod]
         public void ArmarEquipo()
         {
-            //Arange
-            var partida = new Partida();
-            var partida2 = new Partida();
-            //Act
-            partida.ArmarEquipos();
-            partida2.ArmarEquipos(); //ver
-            //Assert
+            
 
         }
     }

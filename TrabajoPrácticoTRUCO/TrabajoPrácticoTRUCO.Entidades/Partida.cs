@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabajoPrácticoTRUCO.Entidades
 {
-    
+    public enum users { user1, user2, user3, user4 }
     public class Partida
     {
         public Mazo mazo { get; set; }
@@ -17,43 +17,43 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
         public Partida()
         {
+            Manos = new List<Mano>();
             mazo = new Mazo();
             Jugadores = new List<Jugador>();
-            for (int i = 0; i < 4; i++)
-            {
-                Jugador jugador = new Jugador();
-                if (i == 0 || i == 2)
-                {
-                    jugador.Equipo = 1;
-                }
-                else
-                {
-                    jugador.Equipo = 2;
-                }
-                Jugadores.Add(jugador);
-            }
             HayGanador = false;     
         }
 
-        public bool AgregarJugador(string nombre)
+        public bool VerificarDisponibilidad()
         {
-            int cont = 0;
-            foreach (var jugador in Jugadores)
+            if (Jugadores.Count == 4)
             {
-                if (jugador.Nombre == "")
+                    return false;
+            }
+            return true;
+        } 
+        
+        public void AsignarEquipos()
+        {
+            Jugadores[0].Equipo = 1;
+            Jugadores[1].Equipo = 2;
+            Jugadores[2].Equipo = 1;
+            Jugadores[3].Equipo = 2;
+        }
+
+        public void InsertarJugador(Jugador jugador)
+        {
+            int cont = 1;
+            foreach (var jugador1 in Jugadores)
+            {
+                if (jugador1.Nombre != null)
                 {
-                    Random random = new Random();
-                    int indice = random.Next(0, 3);
-                    while (Jugadores[indice].Nombre != "")
-                    {
-                        indice = random.Next(0, 3);
-                    }
-                    Jugadores[indice].Nombre = nombre;
-                    Jugadores[indice].NombreInterno = "user" + cont.ToString();
-                    return true;
+                    cont = cont + 1;
                 }
             }
-            return false;
+            
+            jugador.NombreInterno = "user" + cont.ToString();
+            Jugadores.Add(jugador);
+
         }
 
         public void NuevaMano()

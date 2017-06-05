@@ -11,6 +11,7 @@ namespace TrabajoPrácticoTRUCO.Test
         [ExpectedException(typeof(NotSupportedException))]
         public void NoPermitirCrearCartaDuplicada()
         {
+            var carta = Carta.CrearCarta();
             //Arange
 
             //    var carta1 = Carta. referenciar
@@ -19,25 +20,5 @@ namespace TrabajoPrácticoTRUCO.Test
             //Assert -> Espera Excepcion
 
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
-        public void partida()
-        {
-            //Arrange
-            Partida nuevaPartida = new Partida();
-            int c = 0;
-
-            //Act
-            while (nuevaPartida.VerificarDisponibilidad())
-            {
-                nuevaPartida.InsertarJugador("c");
-            }
-            var lista = nuevaPartida.Jugadores;
-            //Assert
-
-        }
-
-
     }
 }

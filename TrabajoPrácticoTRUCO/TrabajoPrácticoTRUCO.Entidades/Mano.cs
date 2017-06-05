@@ -30,12 +30,12 @@ namespace TrabajoPrácticoTRUCO.Entidades
             CartasEspeciales.Add(anchoO);
         }
 
-        internal List<Jugador> Repartir(List<Carta> cartas, List<Jugador> jugadores)
+        public List<Jugador> Repartir(List<Carta> cartas, List<Jugador> jugadores)
         {
             int indice = 0;
             foreach (var jugador in jugadores)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     jugador.Cartas.Add(cartas[indice]);
                     indice++;
