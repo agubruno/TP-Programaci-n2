@@ -14,6 +14,8 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
         public string IdConexion { get; set; }
 
+        public bool Turno { get; set; }
+
         //public int Orden { get; set; }
 
         //private Estadistica estadisticas;

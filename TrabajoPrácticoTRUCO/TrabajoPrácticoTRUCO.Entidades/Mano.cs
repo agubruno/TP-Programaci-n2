@@ -16,6 +16,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public Jugador GanadorEnvido { get { return ganadorEnvido; } }
         public List<Carta> CartasEspeciales { get; set; }
 
+
         public Mano()
         {
             Inicia();
@@ -64,6 +65,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             TieneLaMano = (Participantes)indJugador;
         }
+
         public Carta CompararCartas(Carta carta1, Carta carta2)
         {
             int numero1 = carta1.Numero;
