@@ -14,12 +14,12 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public int PuntajesEquipo1 { get; set; }
         public int PuntajesEquipo2 { get; set; }
         //public List<int> Puntajes { get; set; } //PUNTAJE DE CADA EQUIPO (1 Y 2) Y TERCERO TOPE.
-        //public List<Mano> Manos { get; set; }
+        public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
 
         public Partida()
         {
-            //Manos = new List<Mano>();
+            Manos = new List<Mano>();
             mazo = new Mazo();
             Jugadores = new List<Jugador>();
             HayGanador = false;     

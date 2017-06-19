@@ -15,11 +15,13 @@ namespace TrabajoPrácticoTRUCO.Entidades
         private Jugador ganadorEnvido;
         public Jugador GanadorEnvido { get { return ganadorEnvido; } }
         public List<Carta> CartasEspeciales { get; set; }
+        public List<Carta> CartasJugadas { get; set; }
 
 
         public Mano()
         {
             Inicia();
+            CartasJugadas = new List<Carta>();
             CartasEspeciales = new List<Carta>();
             Carta macho = new Carta(palos.Espada, 1);
             CartasEspeciales.Add(macho);
@@ -64,6 +66,23 @@ namespace TrabajoPrácticoTRUCO.Entidades
                 indJugador++;
             }
             TieneLaMano = (Participantes)indJugador;
+        }
+
+        //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
+        public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
+        {
+            Carta carta = this.CompararCartas(carta1, carta2);
+            foreach (var jugador in jugadores)
+            {
+                foreach (var cart in jugador.Cartas)
+                {
+                    if (cart == carta)
+                    {
+                        return jugador;
+                    }
+                }
+            }
+            throw new Exception("La carta no pertenece a ningún jugador");
         }
 
         public Carta CompararCartas(Carta carta1, Carta carta2)
@@ -197,6 +216,28 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             return puntos.Max();
         }
+
+        public void CartaJugada (Carta carta)
+        {
+            CartasJugadas.Add(carta);
+        }
+
+        public bool ValidarCartasJugadas()
+        {
+            if (CartasJugadas.Count() == 4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+        //public Jugador 
+
     }
 }
 

@@ -54,11 +54,10 @@ namespace Truco.Web.Hubs
                 if (jugador.Turno)
                 {
                     Clients.Client(jugador.IdConexion).habilitarMovimientos();
-
                 }
                 else
                 {
-                    Clients.Client(jugador.IdConexion).desabilitarMovimientos();
+                    Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
                 }
             }
         }
@@ -141,6 +140,7 @@ namespace Truco.Web.Hubs
         public void JugarCarta(string codigoCarta)
         {
             Jugador jugador = juego.Jugadores.Find(x => x.IdConexion == Context.ConnectionId); //hacerlo en un metodo y metodo que devuelva equipo
+            var mano = juego.Manos[juego.Manos.Count()-1];
 
             if (jugador.Turno)
             {
@@ -148,10 +148,14 @@ namespace Truco.Web.Hubs
                 int CartaElegida = jugador.Cartas.FindIndex(x => x.Codigo == codigoCarta) + 1;
                 Clients.All.mostrarCarta(carta, jugador.NombreInterno, CartaElegida);
 
+                mano.CartaJugada(carta);
                 juego.AsignarTurno();
-                
-                //juego.Jugadores = juego.AsignarTurno(juego.Jugadores);
+               
                 HabilitarCartas();
+            }
+            if (mano.ValidarCartasJugadas())
+            {
+               // m
             }
         }
 
@@ -160,6 +164,7 @@ namespace Truco.Web.Hubs
             Clients.All.limpiarTablero();
             var nuevomazo = juego.mazo.MezclarMazo();
             Mano nuevamano = new Mano();
+            juego.Manos.Add(nuevamano);
             var jugadores = nuevamano.Repartir(nuevomazo, juego.Jugadores);
 
             foreach (var jugador in jugadores)
@@ -167,7 +172,6 @@ namespace Truco.Web.Hubs
                 if (jugador.Turno)
                 {
                     Clients.Client(jugador.IdConexion).habilitarMovimientos();
-                    
                 }
                 else
                 {
@@ -188,7 +192,7 @@ namespace Truco.Web.Hubs
 //Clients.Client(jugador.IdConexion).showRealEnvidoBotton();
 //Clients.Client(jugador.IdConexion).showFaltaEnvidoBotton();
 
-//Clients.Client(jugador.IdConexion).desabilitarMovimientos();
+//Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
 //Clients.Client(jugador.IdConexion).hideEnvidoOptions();
 //Clients.Client(jugador.IdConexion).hideTrucoBotton();
 //Clients.Client(jugador.IdConexion).hideReTrucoBotton();

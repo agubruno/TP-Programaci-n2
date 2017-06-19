@@ -83,7 +83,7 @@ $(function () {
     };
 
     trucoHub.client.mostrarMensajeFinal = function (data) {
-        if (data == true) {
+        if (data === true) {
             bootbox.alert("GANASTE!");
         } else {
             bootbox.alert("PERDISTE!");
