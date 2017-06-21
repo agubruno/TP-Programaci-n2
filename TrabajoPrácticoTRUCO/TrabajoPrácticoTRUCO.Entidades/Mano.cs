@@ -65,6 +65,24 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             TieneLaMano = (Participantes)indJugador;
         }
+        //
+
+        //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
+        public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
+        {
+            Carta carta = this.CompararCartas(carta1,carta2);
+            foreach (var jugador in jugadores)
+            {
+                foreach (var cart in jugador.Cartas)
+                {
+                    if (cart == carta)
+                    {
+                        return jugador;
+                    }
+                }
+            }
+            throw new Exception("La carta no pertenece a ningún jugador");
+        }
 
         public Carta CompararCartas(Carta carta1, Carta carta2)
         {
