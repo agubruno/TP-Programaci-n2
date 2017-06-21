@@ -71,12 +71,12 @@ namespace TrabajoPrácticoTRUCO.Entidades
         //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
         public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
         {
-            Carta carta = this.CompararCartas(carta1, carta2);
+            Carta cartajugada = this.CompararCartas(carta1, carta2);
             foreach (var jugador in jugadores)
             {
-                foreach (var cart in jugador.Cartas)
+                foreach (var cartagandora in jugador.Cartas)
                 {
-                    if (cart == carta)
+                    if (cartagandora.Codigo == cartajugada.Codigo)
                     {
                         return jugador;
                     }
@@ -90,17 +90,19 @@ namespace TrabajoPrácticoTRUCO.Entidades
             int numero1 = carta1.Numero;
             int numero2 = carta2.Numero;
 
-            List<Carta> cartasacomparar = new List<Carta>();
-            cartasacomparar.Add(carta1);
-            cartasacomparar.Add(carta2);
-
-            foreach (var carta in CartasEspeciales)
+            List<Carta> cartasacomparar = new List<Carta>
             {
-                foreach (var cart2 in cartasacomparar)
+                carta1,
+                carta2
+            };
+
+            foreach (var cartaEspecial in CartasEspeciales)
+            {
+                foreach (var cartaComparar in cartasacomparar)
                 {
-                    if (carta == carta2)
+                    if (cartaEspecial.Codigo == cartaComparar.Codigo)
                     {
-                        return carta;
+                        return cartaEspecial;
                     }
                 }
             }
@@ -234,9 +236,20 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
         }
 
+        public Jugador JugadorGanador (List<Jugador> jugadores)
+        {
+            //Busca ganador de las dos primeras cartas
+            Jugador ganador =JugadorGanoRonda(CartasJugadas[0], CartasJugadas[1],jugadores);
+            Carta cartaganadora = CompararCartas(CartasJugadas[0], CartasJugadas[1]);
+            
 
+            Jugador ganador1 = JugadorGanoRonda(CartasJugadas[2], CartasJugadas[3], jugadores);
+            Carta cartaganadora1 = CompararCartas(CartasJugadas[2], CartasJugadas[3]);
 
-        //public Jugador 
+            var jugador = JugadorGanoRonda(cartaganadora, cartaganadora1, jugadores);
+
+            return JugadorGanoRonda(cartaganadora, cartaganadora1, jugadores);
+        }
 
     }
 }

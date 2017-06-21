@@ -140,7 +140,7 @@ namespace Truco.Web.Hubs
         public void JugarCarta(string codigoCarta)
         {
             Jugador jugador = juego.Jugadores.Find(x => x.IdConexion == Context.ConnectionId); //hacerlo en un metodo y metodo que devuelva equipo
-            var mano = juego.Manos[juego.Manos.Count()-1];
+            var mano = juego.Manos[juego.Manos.Count() - 1];
 
             if (jugador.Turno)
             {
@@ -150,13 +150,18 @@ namespace Truco.Web.Hubs
 
                 mano.CartaJugada(carta);
                 juego.AsignarTurno();
-               
-                HabilitarCartas();
+
             }
             if (mano.ValidarCartasJugadas())
             {
-               // m
-            }
+                var jugadorGanador = mano.JugadorGanador(juego.Jugadores);
+                juego.AsignarTurno(jugadorGanador);
+
+                Mano nuevamano = new Mano();
+                juego.Manos.Add(nuevamano);
+            } 
+
+            HabilitarCartas();
         }
 
         public void Repartir()

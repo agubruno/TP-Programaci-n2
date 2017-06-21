@@ -82,6 +82,21 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }           
         }
 
+        public void AsignarTurno(Jugador jugadorGanador)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (Jugadores[i].Turno)
+                {
+                    Jugadores[i].Turno = false;
+                }
+                if (jugadorGanador.IdConexion == Jugadores[i].IdConexion)
+                {
+                    Jugadores[i].Turno = true;
+                }
+            }
+        }
+
 
 
 
