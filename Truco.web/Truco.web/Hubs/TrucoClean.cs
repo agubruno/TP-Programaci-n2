@@ -75,6 +75,8 @@ namespace Truco.Web.Hubs
                     break;
                 }
             }
+            Mano mano = new Mano();
+
             Clients.Others.mostrarmensaje("Jugador X canto ACCION");
             Clients.Caller.mostrarmensaje("Yo cante ACCION");
 
@@ -87,16 +89,31 @@ namespace Truco.Web.Hubs
 
             // Sino
             Clients.All.limpiarpuntos();
+            //ellos 
+
+            //List<Carta> cartas = new List<Carta>();
+            //foreach (var jugado in juego.Jugadores)
+            //{
+            //    foreach (var cart in jugado.Cartas)
+            //    {
+            //        cartas.Add(cart);
+            //    }
+            //}
+
+            //Clients.All.mostrarPuntosEnvido(mano.CalcularPuntosEnvido(cartas)); 
+            
 
             // Y mostrar puntos y repartir.
 
-
+           
             switch (accion)
             {
                 case "me voy al mazo":
                     break;
                 case "envido":
                     Clients.All.hidemazo();
+                    mano.jugarEnvido(juego.Jugadores);//ver
+                    //envido
                     break;
                 case "envidoenvido":
                     Clients.All.hidemazo();

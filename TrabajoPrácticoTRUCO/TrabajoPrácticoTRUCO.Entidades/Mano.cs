@@ -150,7 +150,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
 
 
-        public void /*Jugador - si queremos que devuelva jug */jugarEnvido(List<Jugador> jugadores)
+        public  Jugador /*- si queremos que devuelva jug */ jugarEnvido(List<Jugador> jugadores)
         {
             int max = 0;
             Jugador ganador = jugadores[0];
@@ -185,7 +185,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
 
             ganadorEnvido = ganador;
-            //return ganador;//esta línea no va, solo para probar
+           return ganador; //esta línea no va, solo para probar
         }
 
         public int CalcularPuntosEnvido(List<Carta> cartas) //lo calcula por cada jugador, deberia almacenarse en un arreglo los resultados parciales de cada jugador y determinar el ganador
