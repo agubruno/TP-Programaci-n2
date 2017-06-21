@@ -25,28 +25,27 @@ namespace Truco.Web.Hubs
                 // Sino ... abajo nos dice en nombre del jugador que se une
                 juego.InsertarJugador(nombre, Context.ConnectionId);
                 Clients.Others.mostrarnuevousuario(nombre);
-            }
-
-            foreach (var jugador in juego.Jugadores)
-            {
-                // Por cada jugador - muestra cada jugador en el tablero
-                Clients.All.mostrarnombre(jugador);
-            }
-
-
-            if (juego.VerificarDisponibilidad() == false)
-            {
                 foreach (var jugador in juego.Jugadores)
                 {
-                    Clients.Client(jugador.IdConexion).mostrarpuntos("Ellos", 0);
-                    Clients.Client(jugador.IdConexion).mostrarpuntos("Nosotros", 0);
-                    juego.AsignarEquipos();
+                    // Por cada jugador - muestra cada jugador en el tablero
+                    Clients.All.mostrarnombre(jugador);
                 }
-                Repartir();
-                HabilitarCartas();
+
+
+                if (juego.VerificarDisponibilidad() == false)
+                {
+                    foreach (var jugador in juego.Jugadores)
+                    {
+                        Clients.Client(jugador.IdConexion).mostrarpuntos("Ellos", 0);
+                        Clients.Client(jugador.IdConexion).mostrarpuntos("Nosotros", 0);
+                        juego.AsignarEquipos();
+                    }
+                    Repartir();
+                    HabilitarCartas();
+                }
             }
         }
-
+          
         public void HabilitarCartas()
         {
             foreach (var jugador in juego.Jugadores)
@@ -62,80 +61,121 @@ namespace Truco.Web.Hubs
             }
         }
 
-        //public void cantar(string accion)
-        //{
-        //    Clients.Others.mostrarmensaje("Jugador X canto ACCION");
-        //    Clients.Caller.mostrarmensaje("Yo cante ACCION");
+        public void cantar(string accion)
+        {
+            //requiere jugador -> id conexion
+            Jugador jugador = new Jugador();
+            var conexion = Context.ConnectionId;
+            foreach (var jug in juego.Jugadores)
+            {
+                if (jug.IdConexion == conexion)
+                {
+                    jugador = jug;
+                    break;
+                }
+            }
+            Mano mano = new Mano();
 
-        //    Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
+            Clients.Others.mostrarmensaje("Jugador X canto ACCION");
+            Clients.Caller.mostrarmensaje("Yo cante ACCION");
 
-        //    // Si el juego termino...
-        //    Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR
-        //    Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
-        //    Clients.All.deshabilitarMovimientos();
+            Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
 
-        //    // Sino
-        //    Clients.All.limpiarpuntos();
+            // Si el juego termino...
+            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR
+            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
+            Clients.All.deshabilitarMovimientos();
 
-        //    // Y mostrar puntos y repartir.
+            // Sino
+            Clients.All.limpiarpuntos();
+            //ellos 
 
+            //List<Carta> cartas = new List<Carta>();
+            //foreach (var jugado in juego.Jugadores)
+            //{
+            //    foreach (var cart in jugado.Cartas)
+            //    {
+            //        cartas.Add(cart);
+            //    }
+            //}
 
-        //    switch (accion)
-        //    {
-        //        case "me voy al mazo":
-        //            break;
-        //        case "envido":
-        //            Clients.All.hidemazo();
-        //            break;
-        //        case "envidoenvido":
-        //            Clients.All.hidemazo();
-        //            break;
-        //        case "faltaenvido":
-        //            Clients.All.hidemazo();
-        //            break;
-        //        case "realenvido":
-        //            Clients.All.hidemazo();
-        //            break;
-        //        case "truco":
-        //            break;
-        //        case "retruco":
-        //            break;
-        //        case "vale4":
-        //            break;
-        //    }
-        //}
+            //Clients.All.mostrarPuntosEnvido(mano.CalcularPuntosEnvido(cartas)); 
+            
 
-        //public void EjecutarAccion(string accion, bool confirmacion)
-        //{
-        //    confirmacion == true => Acepto la acción.
-        //   Clients.All.mostrarmensaje("Jugador X acepto/rechazo la ACCION");
+            // Y mostrar puntos y repartir.
 
-        //    switch (accion)
-        //    {
-        //        case "Envido":
-        //            Clients.All.showmazo();
-        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
-        //            break;
-        //        case "EnvidoEnvido":
-        //            Clients.All.showmazo();
-        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
-        //            break;
-        //        case "RealEnvido":
-        //            Clients.All.showmazo();
-        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
-        //            break;
-        //        case "FaltaEnvido":
-        //            Clients.All.showmazo();
-        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
-        //            break;
-        //        case "Truco":
-        //            break;
-        //        case "ReTruco":
-        //            break;
-        //        case "Vale4":
-        //            break;
-        //    }
-        //}
+           
+            switch (accion)
+            {
+                case "me voy al mazo":
+                    break;
+                case "envido":
+                    Clients.All.hidemazo();
+                    mano.jugarEnvido(juego.Jugadores);//ver
+                    //envido
+                    break;
+                case "envidoenvido":
+                    Clients.All.hidemazo();
+                    break;
+                case "faltaenvido":
+                    Clients.All.hidemazo();
+                    break;
+                case "realenvido":
+                    Clients.All.hidemazo();
+                    break;
+                case "truco":
+                    break;
+                case "retruco":
+                    break;
+                case "vale4":
+                    break;
+            }
+        }
+        // PARA ENVIDO FALTA ASIGNAR MANO
+
+        public void EjecutarAccion(string accion, bool confirmacion)
+        {
+            //confirmacion == true //=> Acepto la acción.
+            Clients.All.mostrarmensaje("Jugador X acepto/rechazo la ACCION");
+
+            //
+            Jugador jugador = new Jugador();
+            var conexion = Context.ConnectionId;
+            foreach (var jug in juego.Jugadores)
+            {
+                if (jug.IdConexion == conexion)
+                {
+                    jugador = jug;
+                    break;
+                }
+            }
+
+            switch (accion)
+            {
+                case "Envido":
+                    Clients.All.showmazo();
+                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
+                    break;
+                case "EnvidoEnvido":
+                    Clients.All.showmazo();
+                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
+                    break;
+                case "RealEnvido":
+                    Clients.All.showmazo();
+                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
+                    break;
+                case "FaltaEnvido":
+                    Clients.All.showmazo();
+                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
+                    break;
+                case "Truco":
+                    break;
+                case "ReTruco":
+                    break;
+                case "Vale4":
+                    break;
+            }
+        }
 
         public void JugarCarta(string codigoCarta)
         {

@@ -67,6 +67,24 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             TieneLaMano = (Participantes)indJugador;
         }
+        //
+
+        //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
+        public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
+        {
+            Carta carta = this.CompararCartas(carta1,carta2);
+            foreach (var jugador in jugadores)
+            {
+                foreach (var cart in jugador.Cartas)
+                {
+                    if (cart == carta)
+                    {
+                        return jugador;
+                    }
+                }
+            }
+            throw new Exception("La carta no pertenece a ningún jugador");
+        }
 
         //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
         public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
@@ -153,7 +171,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
 
 
-        public void /*Jugador - si queremos que devuelva jug */jugarEnvido(List<Jugador> jugadores)
+        public  Jugador /*- si queremos que devuelva jug */ jugarEnvido(List<Jugador> jugadores)
         {
             int max = 0;
             Jugador ganador = jugadores[0];
@@ -188,7 +206,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
 
             ganadorEnvido = ganador;
-            //return ganador;//esta línea no va, solo para probar
+           return ganador; //esta línea no va, solo para probar
         }
 
         public int CalcularPuntosEnvido(List<Carta> cartas) //lo calcula por cada jugador, deberia almacenarse en un arreglo los resultados parciales de cada jugador y determinar el ganador
