@@ -97,10 +97,6 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
         }
 
-
-
-
-
         public void NuevaMano()
         {
             if (HayGanador==false)
@@ -108,6 +104,57 @@ namespace TrabajoPrácticoTRUCO.Entidades
                 Mano nuevamano = new Mano();
                 nuevamano.PasarMano();
                 this.Jugadores = nuevamano.Repartir(mazo.MezclarMazo(),this.Jugadores);   
+            }
+        }
+
+        public void Puntajes (Jugador GanadorMano)
+        {
+            if (GanadorMano.Equipo == 1)
+            {
+                PuntajesEquipo1 = PuntajesEquipo1 + 2;
+            }
+            else
+            {
+                PuntajesEquipo2 = PuntajesEquipo2 + 2;
+            }
+        }
+
+        public bool RondaGanada ()
+        {
+            if (Manos[Manos.Count -1].NumeroDeRonda == 2)
+            {
+                if (Manos[Manos.Count - 1].EquipoGanadorMano == Manos[Manos.Count - 2].EquipoGanadorMano)
+                {
+                    RemoverCartas();
+                    return true;
+                }
+            }
+            else
+            {
+                if (Manos[Manos.Count - 1].NumeroDeRonda == 3)
+                {
+                    if (Manos[Manos.Count - 1].EquipoGanadorMano == Manos[Manos.Count - 2].EquipoGanadorMano)
+                    {
+                        RemoverCartas();
+                        return true;
+                    }
+                    if (Manos[Manos.Count -1].EquipoGanadorMano == Manos[Manos.Count - 3].EquipoGanadorMano)
+                    {
+                        RemoverCartas();
+                        return true;
+                    }
+                 
+                }
+            }
+            return false;
+        }
+
+        public void RemoverCartas()
+        {
+            foreach (var jugador in Jugadores)
+            {
+                jugador.Cartas.RemoveAll(x => x.Numero > 0);
+
             }
         }
     }

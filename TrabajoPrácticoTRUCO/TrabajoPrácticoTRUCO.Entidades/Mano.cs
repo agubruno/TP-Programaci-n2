@@ -16,6 +16,8 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public Jugador GanadorEnvido { get { return ganadorEnvido; } }
         public List<Carta> CartasEspeciales { get; set; }
         public List<Carta> CartasJugadas { get; set; }
+        public int NumeroDeRonda { get; set; }
+        public int EquipoGanadorMano { get; set; }
 
 
         public Mano()
@@ -69,22 +71,6 @@ namespace TrabajoPrácticoTRUCO.Entidades
         }
         //
 
-        //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
-        public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
-        {
-            Carta carta = this.CompararCartas(carta1,carta2);
-            foreach (var jugador in jugadores)
-            {
-                foreach (var cart in jugador.Cartas)
-                {
-                    if (cart == carta)
-                    {
-                        return jugador;
-                    }
-                }
-            }
-            throw new Exception("La carta no pertenece a ningún jugador");
-        }
 
         //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
         public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
@@ -168,8 +154,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
             return carta2;
         }
-
-
+        
 
         public  Jugador /*- si queremos que devuelva jug */ jugarEnvido(List<Jugador> jugadores)
         {

@@ -61,132 +61,132 @@ namespace Truco.Web.Hubs
             }
         }
 
-        public void cantar(string accion)
-        {
-            //requiere jugador -> id conexion
-            Jugador jugador = new Jugador();
-            var conexion = Context.ConnectionId;
-            foreach (var jug in juego.Jugadores)
-            {
-                if (jug.IdConexion == conexion)
-                {
-                    jugador = jug;
-                    break;
-                }
-            }
-            Mano mano = new Mano();
+        //public void cantar(string accion)
+        //{
+        //    //requiere jugador -> id conexion
+        //    Jugador jugador = new Jugador();
+        //    var conexion = Context.ConnectionId;
+        //    foreach (var jug in juego.Jugadores)
+        //    {
+        //        if (jug.IdConexion == conexion)
+        //        {
+        //            jugador = jug;
+        //            break;
+        //        }
+        //    }
+        //    Mano mano = new Mano();
 
-            Clients.Others.mostrarmensaje("Jugador X canto ACCION");
-            Clients.Caller.mostrarmensaje("Yo cante ACCION");
+        //    Clients.Others.mostrarmensaje("Jugador X canto ACCION");
+        //    Clients.Caller.mostrarmensaje("Yo cante ACCION");
 
-            Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
+        //    Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
 
-            // Si el juego termino...
-            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR
-            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
-            Clients.All.deshabilitarMovimientos();
+        //    // Si el juego termino...
+        //    Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR
+        //    Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
+        //    Clients.All.deshabilitarMovimientos();
 
-            // Sino
-            Clients.All.limpiarpuntos();
-            //ellos 
+        //    // Sino
+        //    Clients.All.limpiarpuntos();
+        //    //ellos 
 
-            //List<Carta> cartas = new List<Carta>();
-            //foreach (var jugado in juego.Jugadores)
-            //{
-            //    foreach (var cart in jugado.Cartas)
-            //    {
-            //        cartas.Add(cart);
-            //    }
-            //}
+        //    //List<Carta> cartas = new List<Carta>();
+        //    //foreach (var jugado in juego.Jugadores)
+        //    //{
+        //    //    foreach (var cart in jugado.Cartas)
+        //    //    {
+        //    //        cartas.Add(cart);
+        //    //    }
+        //    //}
 
-            //Clients.All.mostrarPuntosEnvido(mano.CalcularPuntosEnvido(cartas)); 
+        //    //Clients.All.mostrarPuntosEnvido(mano.CalcularPuntosEnvido(cartas)); 
             
 
-            // Y mostrar puntos y repartir.
+        //    // Y mostrar puntos y repartir.
 
            
-            switch (accion)
-            {
-                case "me voy al mazo":
-                    break;
-                case "envido":
-                    Clients.All.hidemazo();
-                    mano.jugarEnvido(juego.Jugadores);//ver
-                    //envido
-                    break;
-                case "envidoenvido":
-                    Clients.All.hidemazo();
-                    break;
-                case "faltaenvido":
-                    Clients.All.hidemazo();
-                    break;
-                case "realenvido":
-                    Clients.All.hidemazo();
-                    break;
-                case "truco":
-                    break;
-                case "retruco":
-                    break;
-                case "vale4":
-                    break;
-            }
-        }
-        // PARA ENVIDO FALTA ASIGNAR MANO
+        //    switch (accion)
+        //    {
+        //        case "me voy al mazo":
+        //            break;
+        //        case "envido":
+        //            Clients.All.hidemazo();
+        //            mano.jugarEnvido(juego.Jugadores);//ver
+        //            //envido
+        //            break;
+        //        case "envidoenvido":
+        //            Clients.All.hidemazo();
+        //            break;
+        //        case "faltaenvido":
+        //            Clients.All.hidemazo();
+        //            break;
+        //        case "realenvido":
+        //            Clients.All.hidemazo();
+        //            break;
+        //        case "truco":
+        //            break;
+        //        case "retruco":
+        //            break;
+        //        case "vale4":
+        //            break;
+        //    }
+        //}
+        //// PARA ENVIDO FALTA ASIGNAR MANO
 
-        public void EjecutarAccion(string accion, bool confirmacion)
-        {
-            //confirmacion == true //=> Acepto la acción.
-            Clients.All.mostrarmensaje("Jugador X acepto/rechazo la ACCION");
+        //public void EjecutarAccion(string accion, bool confirmacion)
+        //{
+        //    //confirmacion == true //=> Acepto la acción.
+        //    Clients.All.mostrarmensaje("Jugador X acepto/rechazo la ACCION");
 
-            //
-            Jugador jugador = new Jugador();
-            var conexion = Context.ConnectionId;
-            foreach (var jug in juego.Jugadores)
-            {
-                if (jug.IdConexion == conexion)
-                {
-                    jugador = jug;
-                    break;
-                }
-            }
+        //    //
+        //    Jugador jugador = new Jugador();
+        //    var conexion = Context.ConnectionId;
+        //    foreach (var jug in juego.Jugadores)
+        //    {
+        //        if (jug.IdConexion == conexion)
+        //        {
+        //            jugador = jug;
+        //            break;
+        //        }
+        //    }
 
-            switch (accion)
-            {
-                case "Envido":
-                    Clients.All.showmazo();
-                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
-                    break;
-                case "EnvidoEnvido":
-                    Clients.All.showmazo();
-                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
-                    break;
-                case "RealEnvido":
-                    Clients.All.showmazo();
-                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
-                    break;
-                case "FaltaEnvido":
-                    Clients.All.showmazo();
-                    Clients.Client(jugador.IdConexion).habilitarMovimientos();
-                    break;
-                case "Truco":
-                    break;
-                case "ReTruco":
-                    break;
-                case "Vale4":
-                    break;
-            }
-        }
+        //    switch (accion)
+        //    {
+        //        case "Envido":
+        //            Clients.All.showmazo();
+        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
+        //            break;
+        //        case "EnvidoEnvido":
+        //            Clients.All.showmazo();
+        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
+        //            break;
+        //        case "RealEnvido":
+        //            Clients.All.showmazo();
+        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
+        //            break;
+        //        case "FaltaEnvido":
+        //            Clients.All.showmazo();
+        //            Clients.Client(jugador.IdConexion).habilitarMovimientos();
+        //            break;
+        //        case "Truco":
+        //            break;
+        //        case "ReTruco":
+        //            break;
+        //        case "Vale4":
+        //            break;
+        //    }
+        //}
 
         public void JugarCarta(string codigoCarta)
         {
-            Jugador jugador = juego.Jugadores.Find(x => x.IdConexion == Context.ConnectionId); //hacerlo en un metodo y metodo que devuelva equipo
+            Jugador Jugador = juego.Jugadores.Find(x => x.IdConexion == Context.ConnectionId); //hacerlo en un metodo y metodo que devuelva equipo
             var mano = juego.Manos[juego.Manos.Count() - 1];
 
-            if (jugador.Turno)
+            if (Jugador.Turno)
             {
-                Carta carta = jugador.Cartas.Find(x => x.Codigo == codigoCarta);
-                int CartaElegida = jugador.Cartas.FindIndex(x => x.Codigo == codigoCarta) + 1;
-                Clients.All.mostrarCarta(carta, jugador.NombreInterno, CartaElegida);
+                Carta carta = Jugador.Cartas.Find(x => x.Codigo == codigoCarta);
+                int CartaElegida = Jugador.Cartas.FindIndex(x => x.Codigo == codigoCarta) + 1;
+                Clients.All.mostrarCarta(carta, Jugador.NombreInterno, CartaElegida);
 
                 mano.CartaJugada(carta);
                 juego.AsignarTurno();
@@ -196,19 +196,54 @@ namespace Truco.Web.Hubs
             {
                 var jugadorGanador = mano.JugadorGanador(juego.Jugadores);
                 juego.AsignarTurno(jugadorGanador);
+                juego.Manos[juego.Manos.Count - 1].EquipoGanadorMano = jugadorGanador.Equipo;
+
+
+                if (juego.RondaGanada())
+                {
+                    juego.Puntajes(jugadorGanador);
+
+                    if (jugadorGanador.Equipo == 1)
+                    {
+                        Clients.Caller.mostrarmensaje("El equipo numero uno gano la ronda!");
+                    }
+                    else
+                    {
+                        Clients.Caller.mostrarmensaje("El equipo numero dos gano la ronda!");
+                    }
+
+                    foreach (var jugador in juego.Jugadores)
+                    {
+                        if (jugador.Equipo == 1)
+                        {
+                            Clients.Client(jugador.IdConexion).mostrarpuntos("Ellos", juego.PuntajesEquipo2);
+                            Clients.Client(jugador.IdConexion).mostrarpuntos("Nosotros", juego.PuntajesEquipo1);
+                        }
+                        else
+                        {
+                            Clients.Client(jugador.IdConexion).mostrarpuntos("Ellos", juego.PuntajesEquipo1);
+                            Clients.Client(jugador.IdConexion).mostrarpuntos("Nosotros", juego.PuntajesEquipo2);
+                        }
+                    }
+                    Repartir();
+                }
 
                 Mano nuevamano = new Mano();
+                nuevamano.NumeroDeRonda = mano.NumeroDeRonda + 1;
                 juego.Manos.Add(nuevamano);
             } 
+            
 
             HabilitarCartas();
         }
 
         public void Repartir()
         {
+            //juego.RemoverCartas();
             Clients.All.limpiarTablero();
             var nuevomazo = juego.mazo.MezclarMazo();
             Mano nuevamano = new Mano();
+            nuevamano.NumeroDeRonda = 1;
             juego.Manos.Add(nuevamano);
             var jugadores = nuevamano.Repartir(nuevomazo, juego.Jugadores);
 

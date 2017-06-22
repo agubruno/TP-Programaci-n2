@@ -5,10 +5,11 @@
 //    $("#envidoRegion").alert(data); //envidoRegion no va
 //}
 
-// Visualizar puntos en el chat.
-trucoHub.client.mostrarPuntosEnvido = function (data) {
-    $("#messages").prepend("<p>" + data + " los puntos son!</p>");
-};
+//// Visualizar puntos en el chat.
+//trucoHub.client.mostrarPuntosEnvido = function (data) {
+//    $("#messages").prepend("<p>" + data + " los puntos son!</p>");
+//};
+
 // Oculta las acciones del envido.
 function ocultarSeccionesEnvido() {
     $("#envidoRegion").hide();
