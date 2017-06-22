@@ -228,7 +228,7 @@ $(function () {
     trucoHub.client.mostrarCarta = function (carta, nombreInterno, cartaElegida) {
         var selector = "#" + nombreInterno + "_card" + cartaElegida;
         $(carta.Selector).attr("src", "");
-        $(selector).attr("src", carta.Imagen);
+        $(selector).attr("src", carta.Imagen2);
     };
 
     trucoHub.client.mostrarCartas = function (data) {
@@ -241,7 +241,7 @@ $(function () {
 
                 var img = $("<img width='100' />").attr({
                     'id': value.Codigo,
-                    'src': value.Imagen,
+                    'src':value.Imagen2,
                     'alt': value.Codigo,
                     'cc': value.Codigo
                 }).appendTo($("#cards"));
@@ -409,27 +409,65 @@ $(function () {
     trucoHub.client.hideVale4Options = function (data) {
         $("#vale4Region").hide();
     };
-    
-    $("#bottonCartasEspañolas").click(function (carta,nombreInterno) {
-        $("#bottonCartasEspañolas").hide();
-        nombreInterno = $("[id*=user]");
-        $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
-       
 
-    });
-    $("#bottonCartasdeAvengers").click(function (carta,nombreInterno) {
+
+    $("#bottonCartasEspañolas").click(function (carta) {
+         $("#bottonCartasEspañolas").hide();
+         $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
+         $("[id*=user]").attr("src", carta.Imagen1);
+       
+          
+            
+
+
+        });
+    $("#bottonCartasdeAvengers").click(function (carta) {
         $("#bottonCartasdeAvengers").hide();
-        nombreInterno = $("[id*=user]");
         $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
+        $("[id*=user]").attr("src", carta.Imagen2);
+      
        
+           
 
-    });
-    $("#bottonCartasdePokemon").click(function (carta,nombreInterno) {
+
+        });
+    $("#bottonCartasdePokemon").click(function (carta) {
         $("#bottonCartasdePokemon").hide();
-        nombreInterno = $("[id*=user]");
         $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
+        $("[id*=user]").attr("src", carta.Imagen3);
+       
+           
+ 
+
+        });
+
+    //    $("#bottonCartasEspañolas").click(function (carta, nombreInterno, tipoMazo) {
+    //    $("#bottonCartasEspañolas").hide();
+    //    nombreInterno = $("[id*=user]");
+    //    $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
+    //    tipoMazo = "/Images/Clasicas";
+    //    $("[id*=user]").attr("src", tipoMazo + carta.Imagen);
        
 
-    });
+    //});
+    //$("#bottonCartasdeAvengers").click(function (carta,nombreInterno,tipoMazo) {
+    //    $("#bottonCartasdeAvengers").hide();
+    //    nombreInterno = $("[id*=user]");
+    //    $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
+    //    tipoMazo = "/Images/Avengers";
+    //    $("[id*=user]").attr("src", tipoMazo + carta.Imagen);
+       
+
+    //});
+    //$("#bottonCartasdePokemon").click(function (carta,nombreInterno,tipoMazo) {
+    //    $("#bottonCartasdePokemon").hide();
+    //    nombreInterno = $("[id*=user]");
+    //    $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
+    //    tipoMazo = "/Images/Pokemon";
+    //    $("[id*=user]").attr("src", tipoMazo+carta.Imagen);
+
+       
+
+    //});
     $.connection.hub.start(function () { });
 });

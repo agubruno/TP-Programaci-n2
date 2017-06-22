@@ -17,29 +17,68 @@ namespace TrabajoPrácticoTRUCO.Entidades
             this.Palo = palo;
             this.Numero = numero;
             this.Codigo = numero.ToString() + palo.ToString();
-            this.Imagen = "/Images/";
+            this.Imagen1 = "/Images/Clasicas/";
             switch (palo)
             {
                 case palos.Espada:
-                    this.Imagen = Imagen + "e" + numero.ToString() +".jpg";
+                    this.Imagen1 = Imagen1 + "e" + numero.ToString() +".jpg";
                     break;
                 case palos.Basto:
-                    this.Imagen = Imagen + "b" + numero.ToString() + ".jpg";
+                    this.Imagen1 = Imagen1 + "b" + numero.ToString() + ".jpg";
                     break;
                 case palos.Oro:
-                    this.Imagen = Imagen + "o" + numero.ToString() + ".jpg";
+                    this.Imagen1 = Imagen1 + "o" + numero.ToString() + ".jpg";
                     break;
                 case palos.Copa:
-                    this.Imagen = Imagen + "c" + numero.ToString() + ".jpg";
+                    this.Imagen1 = Imagen1 + "c" + numero.ToString() + ".jpg";
                     break;
                 default:
                     break;
             }
+            this.Imagen2 = "/Images/Avengers/";
+            switch (palo)
+            {
+                case palos.Espada:
+                    this.Imagen2 = Imagen2 + numero.ToString()+"EspadaA" + ".jpg";
+                    break;
+                case palos.Basto:
+                    this.Imagen2 = Imagen2 +  numero.ToString()+"BastoA" + ".jpg";
+                    break;
+                case palos.Oro:
+                    this.Imagen2 = Imagen2 +  numero.ToString()+"OroA" + ".jpg";
+                    break;
+                case palos.Copa:
+                    this.Imagen2 = Imagen2 +  numero.ToString()+"CopaA" + ".jpg";
+                    break;
+                default:
+                    break;
+            }
+            this.Imagen3 = "/Images/Pokemon/";
+            switch (palo)
+            {
+                case palos.Espada:
+                    this.Imagen3 = Imagen3 + numero.ToString() + "EspadaP" + ".jpg";
+                    break;
+                case palos.Basto:
+                    this.Imagen3 = Imagen3 + numero.ToString() + "BastoP" + ".jpg";
+                    break;
+                case palos.Oro:
+                    this.Imagen3 = Imagen3 + numero.ToString() + "OroP" + ".jpg";
+                    break;
+                case palos.Copa:
+                    this.Imagen3 = Imagen3 + numero.ToString() + "CopaP" + ".jpg";
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public palos Palo { get; }
         public int Numero { get;  }
         public string Codigo { get; set; }
-        public string Imagen { get; set; }
+        public string Imagen1 { get; set; }
+        public string Imagen2 { get; set; }
+        public string Imagen3 { get; set; }
     }
 }
