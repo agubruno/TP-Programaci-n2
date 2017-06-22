@@ -9,6 +9,8 @@
 //trucoHub.client.mostrarPuntosEnvido = function (data) {
 //    $("#messages").prepend("<p>" + data + " los puntos son!</p>");
 //};
+// elige Mazo
+
 
 // Oculta las acciones del envido.
 function ocultarSeccionesEnvido() {
@@ -46,7 +48,7 @@ function Limpiar() {
     $("#cards").html("");
 
     // Volteamos las cartas de la mesa.
-    $("[id*=user][id*=card]").attr("src", "Images/BACK.JPG");
+    $("[id*=user][id*=card]").attr("src", "Images/BACK2.JPG");
 }
 
 // Inicializamos los componentes.
@@ -407,5 +409,27 @@ $(function () {
     trucoHub.client.hideVale4Options = function (data) {
         $("#vale4Region").hide();
     };
+    
+    $("#bottonCartasEspañolas").click(function (carta,nombreInterno) {
+        $("#bottonCartasEspañolas").hide();
+        nombreInterno = $("[id*=user]");
+        $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
+       
+
+    });
+    $("#bottonCartasdeAvengers").click(function (carta,nombreInterno) {
+        $("#bottonCartasdeAvengers").hide();
+        nombreInterno = $("[id*=user]");
+        $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
+       
+
+    });
+    $("#bottonCartasdePokemon").click(function (carta,nombreInterno) {
+        $("#bottonCartasdePokemon").hide();
+        nombreInterno = $("[id*=user]");
+        $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
+       
+
+    });
     $.connection.hub.start(function () { });
 });
