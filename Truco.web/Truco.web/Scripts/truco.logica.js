@@ -412,9 +412,11 @@ $(function () {
 
 
     $("#bottonCartasEspañolas").click(function (carta) {
-         $("#bottonCartasEspañolas").hide();
-         $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
-         $("[id*=user]").attr("src", carta.Imagen1);
+        $("#bottonCartasEspañolas").hide();
+        $("#bottonCartasdeAvengers").hide();
+        $("#bottonCartasdePokemon").hide();
+        $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
+        $("[id*=user]").attr("src", carta.Imagen1);
        
           
             
@@ -423,6 +425,8 @@ $(function () {
         });
     $("#bottonCartasdeAvengers").click(function (carta) {
         $("#bottonCartasdeAvengers").hide();
+        $("#bottonCartasEspañolas").hide();
+        $("#bottonCartasdePokemon").hide();
         $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
         $("[id*=user]").attr("src", carta.Imagen2);
       
@@ -433,6 +437,8 @@ $(function () {
         });
     $("#bottonCartasdePokemon").click(function (carta) {
         $("#bottonCartasdePokemon").hide();
+        $("#bottonCartasdeAvengers").hide();
+        $("#bottonCartasEspañolas").hide();
         $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
         $("[id*=user]").attr("src", carta.Imagen3);
        
