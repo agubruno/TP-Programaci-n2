@@ -228,7 +228,7 @@ $(function () {
     trucoHub.client.mostrarCarta = function (carta, nombreInterno, cartaElegida) {
         var selector = "#" + nombreInterno + "_card" + cartaElegida;
         $(carta.Selector).attr("src", "");
-        $(selector).attr("src", carta.Imagen2);
+        $(selector).attr("src", carta.Imagen1);
     };
 
     trucoHub.client.mostrarCartas = function (data) {
@@ -241,7 +241,7 @@ $(function () {
 
                 var img = $("<img width='100' />").attr({
                     'id': value.Codigo,
-                    'src':value.Imagen2,
+                    'src':value.Imagen1,
                     'alt': value.Codigo,
                     'cc': value.Codigo
                 }).appendTo($("#cards"));
@@ -425,8 +425,8 @@ $(function () {
         });
     $("#bottonCartasdeAvengers").click(function (carta) {
         $("#bottonCartasdeAvengers").hide();
-        $("#bottonCartasEspañolas").hide();
         $("#bottonCartasdePokemon").hide();
+        $("#bottonCartasEspañolas").hide();
         $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
         $("[id*=user]").attr("src", carta.Imagen2);
       
@@ -437,8 +437,9 @@ $(function () {
         });
     $("#bottonCartasdePokemon").click(function (carta) {
         $("#bottonCartasdePokemon").hide();
-        $("#bottonCartasdeAvengers").hide();
         $("#bottonCartasEspañolas").hide();
+        $("#bottonCartasdeAvengers").hide();
+       
         $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
         $("[id*=user]").attr("src", carta.Imagen3);
        
