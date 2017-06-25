@@ -16,7 +16,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public int numeroDeRonda { get; set; }
         public int PuntajesEquipo1 { get { return puntajesEquipo1; } }
         public int PuntajesEquipo2 { get { return puntajesEquipo2; } }
-        //public List<int> Puntajes { get; set; } //PUNTAJE DE CADA EQUIPO (1 Y 2) Y TERCERO TOPE.
+        public Jugador ManoJugador { get; set; }
         public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
 

@@ -283,64 +283,87 @@ namespace Truco.Web.Hubs
             HabilitarCartas();
         }
 
-        public void JugarCarta(string codigoCarta) //quien le pasa este parámetro?
+        public void JugarCarta(string codigoCarta)
         {
-            Jugador Jugador = juego.ObtenerJugador(Context.ConnectionId);
+            Jugador Jugador = juego.Jugadores.Find(x => x.IdConexion == Context.ConnectionId); //hacerlo en un metodo y metodo que devuelva equipo
             var mano = juego.Manos[juego.Manos.Count() - 1];
+
             if (Jugador.Turno)
             {
-                //VALORES PARA CREAR EL SELECTOR
                 Carta carta = Jugador.Cartas.Find(x => x.Codigo == codigoCarta);
-                //int CartaElegida = mano.NumeroDeRonda;
-                int CartaElegida = juego.DevolverNumeroDeRonda(); //VER
-                Clients.All.mostrarCarta(carta, Jugador.NombreInterno, CartaElegida);
-                mano.AgregarCartaJugada(carta); //Añade la carta que juega ese jugador a una lista para compararla con la de los demás jugadores
-                juego.PasarTurnoAlSiguiente(); //Pasa el turno al siguiente jugador
-            }
+                int CartaElegida = juego.DevolverNumeroDeRonda();
 
+                Clients.All.mostrarCarta(carta, Jugador.NombreInterno, CartaElegida);
+                mano.AgregarCartaJugada(carta);
+
+                juego.PasarTurnoAlSiguiente();
+            }
             if (mano.ValidarCartasJugadas())
             {
                 var jugadorGanador = mano.JugadorGanador(juego.Jugadores);
+                juego.Manos[juego.Manos.Count - 1].EquipoGanadorMano = jugadorGanador.Equipo;
                 juego.AsignarTurno(jugadorGanador);
-                juego.Manos[juego.Manos.Count - 1].EquipoGanadorMano = jugadorGanador.Equipo; //Estable el equipo que gano esa mano en base al jugador que tenia la carta más alta
 
-                if (juego.RondaGanada()) //Ver que hace este método
+                if (juego.RondaGanada())
                 {
                     juego.Puntajes(jugadorGanador);
 
-                    if (jugadorGanador.Equipo == 1)
+
+                    foreach (var jugador in juego.Jugadores)
                     {
-                        Clients.Caller.mostrarmensaje("El equipo numero uno gano la ronda!");
+                        if (jugadorGanador.Equipo == 1)
+                        {
+                            Clients.Client(jugador.IdConexion).mostrarmensaje("El equipo numero uno gano la ronda!");
+                        }
+                        else
+                        {
+                            Clients.Client(jugador.IdConexion).mostrarmensaje("El equipo numero dos gano la ronda!");
+                        }
                     }
-                    else
-                    {
-                        Clients.Caller.mostrarmensaje("El equipo numero dos gano la ronda!");
-                    }            
-                    MostrarPuntajes(); 
+
+                    MostrarPuntajes();
+
+                }
+                if (juego.RondaGanada() == false)
+                {
+                    Mano nuevamano = new Mano();
+                    nuevamano.NumeroDeRonda = juego.Manos[juego.Manos.Count() - 1].NumeroDeRonda + 1;
+                    juego.numeroDeRonda = juego.numeroDeRonda + 1;
+                    juego.Manos.Add(nuevamano);
+                }
+                else
+                {
                     Repartir();
                 }
-                Mano nuevamano = new Mano();
-                nuevamano.NumeroDeRonda = mano.NumeroDeRonda + 1;      
-                juego.Manos.Add(nuevamano);
-                juego.numeroDeRonda = juego.numeroDeRonda + 1;
-                //QUITAR LOS BOTONES DE ENVIDO DESPUES DE LA PRIMER MANO
-
-                if (juego.DevolverNumeroDeRonda() > 1)
+                if (juego.DevolverNumeroDeRonda()>1)
                 {
                     Clients.All.ocultarBotonesEnvido();
                 }
+
             }
-            //Jugador.Cartas.Remove(carta);  //le saco la carta de la lista al jugador
             HabilitarCartas();
         }
 
         public void Repartir()
         {
-            //juego.RemoverCartas();
+            juego.RemoverCartas();
             Clients.All.limpiarTablero();
+
+            if (juego.Manos.Count == 0)
+            {
+                juego.AsignarTurno(juego.Jugadores[0]);
+                juego.ManoJugador = juego.Jugadores[0];
+            }
+            else
+            {
+                juego.AsignarTurno(juego.ManoJugador);
+                juego.PasarTurnoAlSiguiente();
+            }
+
             var nuevomazo = juego.mazo.MezclarMazo();
             Mano nuevamano = new Mano();
             nuevamano.NumeroDeRonda = 1;
+            juego.numeroDeRonda = 1;
             juego.Manos.Add(nuevamano);
             var jugadores = nuevamano.Repartir(nuevomazo, juego.Jugadores);
 
@@ -349,12 +372,13 @@ namespace Truco.Web.Hubs
                 if (jugador.Turno)
                 {
                     Clients.Client(jugador.IdConexion).habilitarMovimientos();
+                    juego.ManoJugador = jugador;
                 }
                 else
                 {
                     Clients.Client(jugador.IdConexion).desabilitarMovimientos();
                 }
-                
+
                 Clients.Client(jugador.IdConexion).mostrarCartas(jugador.Cartas.ToArray());
             }
         }
