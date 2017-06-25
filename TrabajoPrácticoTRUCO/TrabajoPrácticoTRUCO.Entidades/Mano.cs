@@ -12,8 +12,8 @@ namespace TrabajoPrácticoTRUCO.Entidades
     public class Mano
     {
         public Participantes TieneLaMano { get; set; }
-        private Jugador ganadorEnvido;
-        public Jugador GanadorEnvido { get { return ganadorEnvido; } }
+        private static Jugador ganadorEnvido;
+        public static Jugador GanadorEnvido { get { return ganadorEnvido; } }
         public List<Carta> CartasEspeciales { get; set; }
         public List<Carta> CartasJugadas { get; set; }
         public int NumeroDeRonda { get; set; }
@@ -69,8 +69,6 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             TieneLaMano = (Participantes)indJugador;
         }
-        //
-
 
         //DEVUELVE EL JUGADOR QUE GANO EL TRUCO
         public Jugador JugadorGanoRonda(Carta carta1, Carta carta2, List<Jugador> jugadores)
@@ -145,8 +143,6 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
             }
 
-
-
             if (numero1 > numero2)
             {
                 return carta1;
@@ -156,7 +152,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
         }
         
 
-        public  Jugador /*- si queremos que devuelva jug */ jugarEnvido(List<Jugador> jugadores)
+        public static Jugador jugarEnvido(List<Jugador> jugadores) //ver si va estatico// devuelve el ganador
         {
             int max = 0;
             Jugador ganador = jugadores[0];
@@ -191,10 +187,10 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
 
             ganadorEnvido = ganador;
-           return ganador; //esta línea no va, solo para probar
+           return ganador; 
         }
 
-        public int CalcularPuntosEnvido(List<Carta> cartas) //lo calcula por cada jugador, deberia almacenarse en un arreglo los resultados parciales de cada jugador y determinar el ganador
+        public static int CalcularPuntosEnvido(List<Carta> cartas) //lo calcula por cada jugador, deberia almacenarse en un arreglo los resultados parciales de cada jugador y determinar el ganador
         {
             int[] puntos = new int[3];
 
@@ -222,7 +218,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             return puntos.Max();
         }
 
-        public void CartaJugada (Carta carta)
+        public void AgregarCartaJugada (Carta carta)
         {
             CartasJugadas.Add(carta);
         }

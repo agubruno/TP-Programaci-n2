@@ -11,8 +11,11 @@ namespace TrabajoPrácticoTRUCO.Entidades
     {
         public Mazo mazo { get; set; }
         public List<Jugador> Jugadores { get; set; }
-        public int PuntajesEquipo1 { get; set; }
-        public int PuntajesEquipo2 { get; set; }
+        private int puntajesEquipo1;
+        private int puntajesEquipo2;
+        public int numeroDeRonda { get; set; }
+        public int PuntajesEquipo1 { get { return puntajesEquipo1; } }
+        public int PuntajesEquipo2 { get { return puntajesEquipo2; } }
         //public List<int> Puntajes { get; set; } //PUNTAJE DE CADA EQUIPO (1 Y 2) Y TERCERO TOPE.
         public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
@@ -22,7 +25,76 @@ namespace TrabajoPrácticoTRUCO.Entidades
             Manos = new List<Mano>();
             mazo = new Mazo();
             Jugadores = new List<Jugador>();
-            HayGanador = false;     
+            HayGanador = false;
+            numeroDeRonda = 1;
+        }
+   
+        //DEVUELVE EL MENSAJE CON EL GANADOR DEL ENVIDO Y CON LOS PUNTAJES DE TODOS LOS JUGADORES
+        public List<string> Mensajes(Jugador GanadorEnvido) //PUEDE RECCIBIR COMO PARAMETRO QUE SE JUGO, ASÍ DETERMINA LOS PUNTAJES
+        {
+            List<string> mensajes = new List<string>();
+            int[] puntos = new int[4];
+            string[] nombres = new string[4];
+            for (int i = 0; i < Jugadores.Count; i++)
+            {
+                puntos[i] = Jugadores[i].PuntosEnvido;
+                nombres[i] = Jugadores[i].Nombre;
+            }
+            //MENSAJE PUNTOS Y NOMBRES DE TODOS LOS JUGADORES
+            string mensaje = "Los puntos son: " + nombres[0] + " : " + puntos[0].ToString() + " - " + nombres[1] + " : " + puntos[1].ToString() + " - " + nombres[2] + " : " + puntos[2].ToString() + " - " + nombres[3] + " : " + puntos[3].ToString();
+            mensajes.Add(mensaje);  
+            //MENSAJE CON LOS PUNTOS DEL GANADOR DEL ENVIDO      
+            string mensaje1 = "El ganador del envido es: " + GanadorEnvido.Nombre + " , sus puntos son: " + GanadorEnvido.PuntosEnvido.ToString();
+            mensajes.Add(mensaje1);
+            return mensajes;
+
+        }
+        //ACTUALIZAR PUNTAJES
+        public void ActualizarPuntajes(int equipo, string accion)
+        {        
+            switch (accion)
+            {
+                case "Envido":
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 2;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 2;
+                    }
+                    break;
+                case "EnvidoEnvido":
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 4;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 4;
+                    }
+                    break;
+                case "RealEnvido": //VER CUANDO SUMA 5
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 3;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 3;
+                    }
+                    break;
+                //VER FALTA ENVIDO
+                default:
+                    //if (equipo == 1)
+                    //{
+                    //    PuntajesEquipo1 = PuntajesEquipo1 + 2;
+                    //}
+                    //else
+                    //{
+                    //    PuntajesEquipo2 = PuntajesEquipo2 + 2;
+                    break;
+            }
         }
 
         public bool VerificarDisponibilidad()
@@ -61,7 +133,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
 
         }
 
-        public void AsignarTurno()
+        public void PasarTurnoAlSiguiente()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -111,11 +183,11 @@ namespace TrabajoPrácticoTRUCO.Entidades
         {
             if (GanadorMano.Equipo == 1)
             {
-                PuntajesEquipo1 = PuntajesEquipo1 + 2;
+                puntajesEquipo1 = puntajesEquipo1 + 1;
             }
             else
             {
-                PuntajesEquipo2 = PuntajesEquipo2 + 2;
+                puntajesEquipo2 = puntajesEquipo2 + 1;
             }
         }
 
@@ -156,6 +228,20 @@ namespace TrabajoPrácticoTRUCO.Entidades
                 jugador.Cartas.RemoveAll(x => x.Numero > 0);
 
             }
+        }
+
+        public Jugador ObtenerJugador(string ConnectionId)
+        {
+            return  Jugadores.Find(x => x.IdConexion == ConnectionId);
+        }
+
+        public int DevolverNumeroDeRonda()
+        {
+            if (this.numeroDeRonda>3)
+            {
+                numeroDeRonda = 1;
+            }
+            return numeroDeRonda;
         }
     }
 }

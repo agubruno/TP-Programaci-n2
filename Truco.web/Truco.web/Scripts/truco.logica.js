@@ -1,16 +1,14 @@
 ﻿var trucoHub = {};
 
-//mostrar puntos (aca)
-//function mostrarPuntosEnvido(data) {
-//    $("#envidoRegion").alert(data); //envidoRegion no va
-//}
 
-//// Visualizar puntos en el chat.
-//trucoHub.client.mostrarPuntosEnvido = function (data) {
-//    $("#messages").prepend("<p>" + data + " los puntos son!</p>");
-//};
-// elige Mazo
-
+//ocultar botones de envido
+function ocultarBotonesEnvido() {
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonEnvido").hide();
+    $("#bottonEnvidoEnvido").hide();
+    $("#bottonRealEnvido").hide();
+    $("#bottonFaltaEnvido").hide();
+}
 
 // Oculta las acciones del envido.
 function ocultarSeccionesEnvido() {
@@ -62,8 +60,6 @@ function inicializarComponentes() {
 }
 
 $(function () {
-
-
     // Inicializo los componentes.
     inicializarComponentes();
 
@@ -101,6 +97,46 @@ $(function () {
             bootbox.alert("PERDISTE!");
         }
     };
+
+    // VER
+    //Habilita las opciones del envido (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.ocultarOpcionesEnvido = function () {
+        $("#envidoRegion").hide();
+        $("#envidoEnvidoRegion").hide();
+        $("#faltaEnvidoRegion").hide();
+        $("#quieroEnvidoRegion").hide();
+        $("#realEnvidoRegion").hide();
+    }
+    //
+    trucoHub.client.mostrarOpcionesEnvido = function () {
+        $("#envidoRegion").show();
+        $("#envidoEnvidoRegion").show();
+        $("#faltaEnvidoRegion").show();
+        $("#quieroEnvidoRegion").show();
+        $("#realEnvidoRegion").show();
+    }
+    //POR MI
+
+    trucoHub.client.mostrarOpcionesTruco = function () {
+        $("#trucoRegion").show();
+        $("#retrucoRegion").show();
+        $("#vale4Region").show();
+    }
+   
+    //Mostrar ganador envido - POR MI
+    trucoHub.client.mostrarganadorenvido = function (data) {
+        alert(data);
+    };
+
+    //Mostrar puntos envido - POR MI
+    trucoHub.client.mostrarpuntosenvido = function (data) {
+        alert(data);
+    };
+    //oculta botones envido despues de la primer mano
+    trucoHub.client.ocultarBotonesEnvido = function () {
+        ocultarBotonesEnvido(); //o poner la definicion de una acá
+    }
+    //
     $("#bottonEnvido").click(function () {
         $("#bottonEnvido").hide();
         trucoHub.server.cantar("envido");
@@ -227,7 +263,7 @@ $(function () {
 
     trucoHub.client.mostrarCarta = function (carta, nombreInterno, cartaElegida) {
         var selector = "#" + nombreInterno + "_card" + cartaElegida;
-        $(carta.Selector).attr("src", "");
+        $(carta.Selector).attr("src", "");        
         $(selector).attr("src", carta.Imagen1);
     };
 
@@ -238,10 +274,9 @@ $(function () {
 
                 console.log("mostrarCarta:");
                 console.log(value);
-
                 var img = $("<img width='100' />").attr({
                     'id': value.Codigo,
-                    'src':value.Imagen1,
+                    'src':value.Imagen1, 
                     'alt': value.Codigo,
                     'cc': value.Codigo
                 }).appendTo($("#cards"));
@@ -410,34 +445,20 @@ $(function () {
         $("#vale4Region").hide();
     };
 
-
     $("#bottonCartasEspañolas").click(function (carta) {
-        $("#bottonCartasEspañolas").hide();
-        $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
-        $("[id*=user]").attr("src", carta.Imagen1);
-       
-          
-            
-
-
+         //$("#bottonCartasEspañolas").hide();
+         $("[id*=user]").attr("src", "Images/Clasicas/Back1.jpg");
+         $("[id*=user]").attr("src", carta.Imagen1);              
         });
     $("#bottonCartasdeAvengers").click(function (carta) {
-        $("#bottonCartasdeAvengers").hide();
+        //$("#bottonCartasdeAvengers").hide();
         $("[id*=user]").attr("src", "Images/Avengers/Back.jpg");
-        $("[id*=user]").attr("src", carta.Imagen2);
-      
-       
-           
-
-
+        $("[id*=user]").attr("src", carta.Imagen2);      
         });
     $("#bottonCartasdePokemon").click(function (carta) {
-        $("#bottonCartasdePokemon").hide();
+        //$("#bottonCartasdePokemon").hide();
         $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
         $("[id*=user]").attr("src", carta.Imagen3);
-       
-           
- 
 
         });
 
@@ -448,7 +469,6 @@ $(function () {
     //    tipoMazo = "/Images/Clasicas";
     //    $("[id*=user]").attr("src", tipoMazo + carta.Imagen);
        
-
     //});
     //$("#bottonCartasdeAvengers").click(function (carta,nombreInterno,tipoMazo) {
     //    $("#bottonCartasdeAvengers").hide();
@@ -457,7 +477,6 @@ $(function () {
     //    tipoMazo = "/Images/Avengers";
     //    $("[id*=user]").attr("src", tipoMazo + carta.Imagen);
        
-
     //});
     //$("#bottonCartasdePokemon").click(function (carta,nombreInterno,tipoMazo) {
     //    $("#bottonCartasdePokemon").hide();
@@ -465,9 +484,6 @@ $(function () {
     //    $("[id*=user]").attr("src", "Images/Pokemon/Back.jpg");
     //    tipoMazo = "/Images/Pokemon";
     //    $("[id*=user]").attr("src", tipoMazo+carta.Imagen);
-
-       
-
     //});
     $.connection.hub.start(function () { });
 });
