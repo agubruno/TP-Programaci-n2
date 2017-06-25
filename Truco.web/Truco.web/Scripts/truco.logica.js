@@ -1,5 +1,12 @@
 ﻿var trucoHub = {};
 
+//ocultar botones de envido (yo)
+function ocultarBotonesTruco() { //LLAMAR AL PRINCIPIO (AL INICIALIZAR)
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonTruco").hide();
+    $("#bottonRetruco").hide();
+    $("#bottonVale4").hide();
+}
 
 //ocultar botones de envido (yo)
 function ocultarBotonesEnvido() { //LLAMAR AL PRINCIPIO (AL INICIALIZAR)
@@ -9,6 +16,23 @@ function ocultarBotonesEnvido() { //LLAMAR AL PRINCIPIO (AL INICIALIZAR)
     $("#bottonRealEnvido").hide();
     $("#bottonFaltaEnvido").hide();
 }
+
+//Habilitar botones truco (yo)
+function habilitarBotonesTruco1() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 Y 4
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonTruco").show();
+}
+//Habilitar botones REtruco (yo)
+function habilitarBotonesRetruco() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 Y 4
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonReTruco").show();
+}
+//Habilitar botones VALEcuarto (yo)
+function habilitarBotonesVale4() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 Y 4
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonVale4").show();
+}
+
 //Habilitar botones envido (yo)
 function habilitarBotonesEnvido() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 Y 4
     //$("#bottonCartasdePokemon").hide();
@@ -17,7 +41,6 @@ function habilitarBotonesEnvido() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 
     $("#bottonRealEnvido").show();
     $("#bottonFaltaEnvido").show();
 }
-
 // Oculta las acciones del envido.
 function ocultarSeccionesEnvido() {
     $("#envidoRegion").hide();
@@ -110,6 +133,35 @@ $(function () {
         }
     };
 
+    //habilita la opcion del REtruco (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.habilitarBotonesTruco1 = function () {
+        $("#bottonTruco").show();
+    }
+    //habilita la opcion del REtruco (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.habilitarBotonesRetruco = function () {
+        $("#bottonReTruco").show();
+    }
+    //habilita la opcion del VALECUATRO (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.habilitarBotonesVale4 = function () {
+        $("#bottonVale4").show();
+    }
+
+    // VER
+    //deshabilita las opciones del truco (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.ocultarBotonesTruco = function () {
+        $("#bottonTruco").hide();
+        $("#bottonReTruco").hide();
+        $("#bottonVale4").hide();
+    }
+    //
+    // VER
+    //Habilita las opciones del truco (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.ocultarOpcionesTruco = function () {
+        $("#trucoRegion").hide();
+        $("#retrucoRegion").hide();
+        $("#vale4Region").hide();
+    }
+    //
     // VER
     //Habilita las opciones del envido (ver como hacer para que se habilte cuando yo quiero) POR MI
     trucoHub.client.ocultarOpcionesEnvido = function () {
@@ -118,6 +170,14 @@ $(function () {
         $("#faltaEnvidoRegion").hide();
         $("#quieroEnvidoRegion").hide();
         $("#realEnvidoRegion").hide();
+    }
+    //
+    // VER
+    //Habilita las opciones del envido (ver como hacer para que se habilte cuando yo quiero) POR MI
+    trucoHub.client.ocultarOpcionesTruco = function () {
+        $("#trucoRegion").hide();
+        $("#retrucoRegion").hide();
+        $("#vale4Region").hide();
     }
     //
     trucoHub.client.mostrarOpcionesEnvido = function () {
@@ -129,12 +189,14 @@ $(function () {
     }
     //POR MI
 
+
     trucoHub.client.mostrarOpcionesTruco = function () {
         $("#trucoRegion").show();
         $("#retrucoRegion").show();
         $("#vale4Region").show();
     }
-   
+
+
     //Mostrar ganador envido - POR MI
     trucoHub.client.mostrarganadorenvido = function (data) {
         alert(data);
@@ -150,64 +212,64 @@ $(function () {
     }
     //
     $("#bottonEnvido").click(function () {
-        $("#bottonEnvido").hide();
+        //$("#bottonEnvido").hide();
         trucoHub.server.cantar("envido");
     });
 
     $("#bottonEnvidoEnvido").click(function () {
-        $("#bottonEnvidoEnvido").hide();
+        //$("#bottonEnvidoEnvido").hide();
         trucoHub.server.cantar("envidoenvido");
     });
 
     $("#bottonFaltaEnvido").click(function () {
-        $("#bottonFaltaEnvido").hide();
+        //$("#bottonFaltaEnvido").hide();
         trucoHub.server.cantar("faltaenvido");
     });
 
     $("#bottonRealEnvido").click(function () {
-        $("#bottonRealEnvido").hide();
+        //$("#bottonRealEnvido").hide();
         trucoHub.server.cantar("realenvido");
     });
 
     $("#bottonQuieroEnvido").click(function () {
-        $("#bottonQuieroEnvido").hide();
+        //$("#bottonQuieroEnvido").hide();
 
         trucoHub.server.ejecutarAccion("Envido", true);
     });
 
     $("#bottonNoQuieroEnvido").click(function () {
-        $("#bottonNoQuieroEnvido").hide();
+        //$("#bottonNoQuieroEnvido").hide();
         trucoHub.server.ejecutarAccion("Envido", false);
     });
 
     $("#bottonQuieroEnvidoEnvido").click(function () {
-        $("#bottonQuieroEnvidoEnvido").hide();
+        //$("#bottonQuieroEnvidoEnvido").hide();
         trucoHub.server.ejecutarAccion("EnvidoEnvido", true);
     });
 
     $("#bottonNoQuieroEnvidoEnvido").click(function () {
-        $("#bottonNoQuieroEnvidoEnvido").hide();
+        //$("#bottonNoQuieroEnvidoEnvido").hide();
         trucoHub.server.ejecutarAccion("EnvidoEnvido", false);
     });
 
 
     $("#bottonQuieroFaltaEnvido").click(function () {
-        $("#bottonQuieroFaltaEnvido").hide();
+        //$("#bottonQuieroFaltaEnvido").hide();
         trucoHub.server.ejecutarAccion("FaltaEnvido", true);
     });
 
     $("#bottonNoQuieroFaltaEnvido").click(function () {
-        $("#bottonNoQuieroFaltaEnvido").hide();
+        //$("#bottonNoQuieroFaltaEnvido").hide();
         trucoHub.server.ejecutarAccion("FaltaEnvido", false);
     });
 
     $("#bottonQuieroRealEnvido").click(function () {
-        $("#bottonQuieroRealEnvido").hide();
+        //$("#bottonQuieroRealEnvido").hide();
         trucoHub.server.ejecutarAccion("RealEnvido", true);
     });
 
     $("#bottonNoQuieroRealEnvido").click(function () {
-        $("#bottonNoQuieroRealEnvido").hide();
+        //$("#bottonNoQuieroRealEnvido").hide();
         trucoHub.server.ejecutarAccion("RealEnvido", false);
     });
 

@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 namespace TrabajoPrácticoTRUCO.Entidades
 {
     public enum users { user1, user2, user3, user4 }
+    public delegate void GanadorDelegate(object sender, GanadorEventArgs e);
+
     public class Partida
     {
+        public event GanadorDelegate OnGanador;
+
         public Mazo mazo { get; set; }
         public List<Jugador> Jugadores { get; set; }
         private int puntajesEquipo1;
@@ -19,6 +23,10 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public Jugador ManoJugador { get; set; }
         public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
+        public string AccionElegida { get; set; }
+        public int EquipoQueRealizoLaAccion { get; set; }
+
+        public int tope { get; set; }
 
         public Partida()
         {
@@ -27,6 +35,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             Jugadores = new List<Jugador>();
             HayGanador = false;
             numeroDeRonda = 1;
+            tope = 2;
         }
    
         //DEVUELVE EL MENSAJE CON EL GANADOR DEL ENVIDO Y CON LOS PUNTAJES DE TODOS LOS JUGADORES
@@ -54,6 +63,16 @@ namespace TrabajoPrácticoTRUCO.Entidades
         {        
             switch (accion)
             {
+                case "me voy al mazo":
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 1;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 1;
+                    }
+                    break;
                 case "Envido":
                     if (equipo == 1)
                     {
@@ -94,7 +113,21 @@ namespace TrabajoPrácticoTRUCO.Entidades
                     //{
                     //    PuntajesEquipo2 = PuntajesEquipo2 + 2;
                     break;
+            }
 
+            if (PuntajesEquipo1 >= tope)
+            {
+                if(OnGanador != null)
+                {
+                    OnGanador(this, new GanadorEventArgs(equipo, PuntajesEquipo1));
+                }
+            }
+            if (puntajesEquipo2 >= tope)
+            {
+                if (OnGanador != null)
+                {
+                    OnGanador(this, new GanadorEventArgs(equipo, PuntajesEquipo2));
+                }
             }
         }
 
@@ -268,9 +301,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
                     return false;
                 }
             }
-
-            return true;
-            
+            return true;           
         }
     }
 }

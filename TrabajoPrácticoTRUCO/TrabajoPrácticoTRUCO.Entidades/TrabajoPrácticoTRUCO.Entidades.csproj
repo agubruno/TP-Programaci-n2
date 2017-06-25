@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Carta.cs" />
     <Compile Include="Estadistica.cs" />
+    <Compile Include="GanadorEventArgs.cs" />
     <Compile Include="Jugador.cs" />
     <Compile Include="Mano.cs" />
     <Compile Include="Mazo.cs" />
