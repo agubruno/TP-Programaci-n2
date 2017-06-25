@@ -1,13 +1,21 @@
 ﻿var trucoHub = {};
 
 
-//ocultar botones de envido
-function ocultarBotonesEnvido() {
+//ocultar botones de envido (yo)
+function ocultarBotonesEnvido() { //LLAMAR AL PRINCIPIO (AL INICIALIZAR)
     //$("#bottonCartasdePokemon").hide();
     $("#bottonEnvido").hide();
     $("#bottonEnvidoEnvido").hide();
     $("#bottonRealEnvido").hide();
     $("#bottonFaltaEnvido").hide();
+}
+//Habilitar botones envido (yo)
+function habilitarBotonesEnvido() { //LLAMAR SIEMRE QUE SEA EL JUGADOR NUMERO 3 Y 4
+    //$("#bottonCartasdePokemon").hide();
+    $("#bottonEnvido").show();
+    $("#bottonEnvidoEnvido").show();
+    $("#bottonRealEnvido").show();
+    $("#bottonFaltaEnvido").show();
 }
 
 // Oculta las acciones del envido.
@@ -89,6 +97,10 @@ $(function () {
     trucoHub.client.mostrarnuevousuario = function (data) {
         $("#messages").prepend("<p>" + data + " se ha unido al juego!</p>");
     };
+    //Deshabilito los botones del envido para que solo estén disponibles para los 2 últimos
+    //trucoHub.client.ocultarBotonesEnvido = function () {
+    //    ocultarBotonesEnvido();
+    //}
 
     trucoHub.client.mostrarMensajeFinal = function (data) {
         if (data === true) {

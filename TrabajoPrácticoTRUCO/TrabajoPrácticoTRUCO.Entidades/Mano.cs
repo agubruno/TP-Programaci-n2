@@ -87,7 +87,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
             throw new Exception("La carta no pertenece a ningún jugador");
         }
 
-        public Carta CompararCartas(Carta carta1, Carta carta2)
+        public Carta CompararCartas(Carta carta1, Carta carta2) //ver
         {
             int numero1 = carta1.Numero;
             int numero2 = carta2.Numero;

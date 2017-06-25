@@ -142,6 +142,7 @@ namespace Truco.Web.Hubs
 
         }
 
+        //CUANDO SE TOCAN LOS BOTONES DE ABAJO A LA DERECHA, LLAMA AL METODO QUE EJECUTA LA ACCIÓN
         public void cantar(string accion)
         {
             Jugador jugador = juego.ObtenerJugador(Context.ConnectionId);
@@ -154,8 +155,8 @@ namespace Truco.Web.Hubs
 
             Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
 
-            // Si el juego termino...
-            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR
+            // Si el juego termino... (acá quizá iria la implementación del evento, que se declara en donde ctualiza puntajes)
+            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR (debería ser al equipo)
             Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
             Clients.All.deshabilitarMovimientos();
 
@@ -266,8 +267,10 @@ namespace Truco.Web.Hubs
                     case "ReTruco":
                         break;
                     case "Vale4":
-                        break;
-                }                     
+                        break;                   
+                }
+                //PARA QUE NO PUEDA CANTAR EL ENVIDO DE NUEVO (SIN IMPORTAR SI LO QUE SE JUGO FUE ENVIDO O TRUCO) -> VALIDAR QUE PUEDAN CANTAR ENVIDO ANTES DE TRUCO
+                Clients.All.ocultarBotonesEnvido();
             }
             else
             {
@@ -321,7 +324,8 @@ namespace Truco.Web.Hubs
                 juego.Manos.Add(nuevamano);
                 juego.numeroDeRonda = juego.numeroDeRonda + 1;
                 //QUITAR LOS BOTONES DE ENVIDO DESPUES DE LA PRIMER MANO
-                if (juego.Manos.Count > 1)
+
+                if (juego.DevolverNumeroDeRonda() > 1)
                 {
                     Clients.All.ocultarBotonesEnvido();
                 }

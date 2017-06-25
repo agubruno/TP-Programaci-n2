@@ -94,6 +94,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
                     //{
                     //    PuntajesEquipo2 = PuntajesEquipo2 + 2;
                     break;
+
             }
         }
 
