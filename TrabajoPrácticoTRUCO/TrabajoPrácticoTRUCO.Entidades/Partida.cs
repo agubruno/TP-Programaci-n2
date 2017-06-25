@@ -244,5 +244,33 @@ namespace TrabajoPrácticoTRUCO.Entidades
             }
             return numeroDeRonda;
         }
+
+        public bool PuedeCantarEnvido (Jugador jugador)
+        {
+            int indice = Jugadores.FindIndex(x => x.IdConexion == jugador.IdConexion);
+
+            if (jugador.IdConexion == ManoJugador.IdConexion)
+            {
+                return false;
+            }
+
+            if (indice == 0)
+            {
+                if (ManoJugador.IdConexion == Jugadores[3].IdConexion)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (ManoJugador.IdConexion == Jugadores[indice - 1].IdConexion)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+            
+        }
     }
 }

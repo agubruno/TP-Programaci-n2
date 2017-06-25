@@ -369,6 +369,18 @@ namespace Truco.Web.Hubs
 
             foreach (var jugador in jugadores)
             {
+                if (juego.PuedeCantarEnvido (jugador))
+                {
+                    Clients.Client(jugador.IdConexion).habilitarBotonesEnvido();
+                    //Clients.Client(jugador.IdConexion).ocultarOpcionesEnvido();
+                }
+                else
+                {
+                    Clients.Client(jugador.IdConexion).ocultarBotonesEnvido();
+                  //  Clients.Client(jugador.IdConexion).mostrarOpcionesEnvido();
+                }
+
+
                 if (jugador.Turno)
                 {
                     Clients.Client(jugador.IdConexion).habilitarMovimientos();
