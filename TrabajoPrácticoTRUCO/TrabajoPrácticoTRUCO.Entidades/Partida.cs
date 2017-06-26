@@ -24,7 +24,7 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
         public string AccionElegida { get; set; }
-        public int EquipoQueRealizoLaAccion { get; set; }
+        public int EquipoQueAceptoLaAccion { get; set; }
 
         public int tope { get; set; }
 
@@ -101,6 +101,36 @@ namespace TrabajoPrácticoTRUCO.Entidades
                     else
                     {
                         puntajesEquipo2 = puntajesEquipo2 + 3;
+                    }
+                    break;
+                case "Truco": 
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 2;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 2;
+                    }
+                    break;
+                case "ReTruco": 
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 3;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 3;
+                    }
+                    break;
+                case "Vale4": 
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = puntajesEquipo1 + 4;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = puntajesEquipo2 + 4;
                     }
                     break;
                 //VER FALTA ENVIDO

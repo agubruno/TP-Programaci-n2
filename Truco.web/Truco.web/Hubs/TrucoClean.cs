@@ -163,7 +163,7 @@ namespace Truco.Web.Hubs
             if (jugador.Turno)
             {
                 switch (accion)
-                {       
+                {
                     case "me voy al mazo": //que hace
                         Repartir();
                         HabilitarCartas();
@@ -182,7 +182,7 @@ namespace Truco.Web.Hubs
                     case "envido":
                         //permitir que solo puedan jugar los jugadores 3 y 4 de cada ronda
                         Clients.All.hidemazo();
-                        SeleccionDelQuiero(jugador, accion); 
+                        SeleccionDelQuiero(jugador, accion);
                         //para que no pueda jugar el envido antes de que juegue el 1 y 2                                                
                         break;
                     case "envidoenvido":
@@ -197,21 +197,32 @@ namespace Truco.Web.Hubs
                         Clients.All.hidemazo();
                         SeleccionDelQuiero(jugador, accion);
                         break;
-                    case "truco":
-                        SeleccionDelQuiero(jugador, accion);
-                        break;
-                    case "retruco":
-                        SeleccionDelQuiero(jugador, accion);
-                        break;
-                    case "vale4":
-                        SeleccionDelQuiero(jugador, accion);
-                        break;
                 }
+                //MENSAJES
+                string mensaje1 = "Jugador " + jugador.Nombre + " canto ACCION";
+                Clients.Others.mostrarmensaje(mensaje1);
+                Clients.Caller.mostrarmensaje("Yo cante ACCION");
+            }
+            switch (accion)
+            {
+                case "truco":
+                    SeleccionDelQuiero(jugador, accion);
+                    break;
+                case "retruco":
+                    SeleccionDelQuiero(jugador, accion);
+                    break;
+                case "vale4":
+                    SeleccionDelQuiero(jugador, accion);
+                    break;
+            }
+            if (accion == "truco" || accion == "retruco" || accion == "vale4")
+            {
                 //MENSAJES
                 string mensaje = "Jugador " + jugador.Nombre + " canto ACCION";
                 Clients.Others.mostrarmensaje(mensaje);
                 Clients.Caller.mostrarmensaje("Yo cante ACCION");
-            }           
+            }
+                       
         }
 
         private void Juego_OnGanador(object sender, GanadorEventArgs e)
@@ -288,19 +299,19 @@ namespace Truco.Web.Hubs
                         break;
                     case "Truco":
                         juego.AccionElegida = accion;
-                        juego.EquipoQueRealizoLaAccion = jugador.Equipo;
+                        juego.EquipoQueAceptoLaAccion = jugador.Equipo;
                         Clients.All.ocultarOpcionesTruco();
                         Clients.All.ocultarBotonesTruco();
                         break;
                     case "ReTruco":
                         juego.AccionElegida = accion;
-                        juego.EquipoQueRealizoLaAccion = jugador.Equipo;
+                        juego.EquipoQueAceptoLaAccion = jugador.Equipo;
                         Clients.All.ocultarOpcionesTruco();
                         Clients.All.ocultarBotonesTruco();
                         break;
                     case "Vale4":
                         juego.AccionElegida = accion;
-                        juego.EquipoQueRealizoLaAccion = jugador.Equipo;
+                        juego.EquipoQueAceptoLaAccion = jugador.Equipo;
                         Clients.All.ocultarOpcionesTruco();
                         Clients.All.ocultarBotonesTruco();
                         break;
@@ -317,7 +328,7 @@ namespace Truco.Web.Hubs
 
             foreach (var jugador1 in juego.Jugadores)
             {
-                if (jugador1.Equipo == juego.EquipoQueRealizoLaAccion)
+                if (jugador1.Equipo == juego.EquipoQueAceptoLaAccion)
                 {
                     switch (juego.AccionElegida)
                     {
@@ -357,7 +368,8 @@ namespace Truco.Web.Hubs
 
                 if (juego.RondaGanada())
                 {
-                    juego.Puntajes(jugadorGanador);
+                    //juego.Puntajes(jugadorGanador); CAMBIE ESTO
+                    juego.ActualizarPuntajes(jugadorGanador.Equipo, juego.AccionElegida);
 
 
                     foreach (var jugador in juego.Jugadores)
