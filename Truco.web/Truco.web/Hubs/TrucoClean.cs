@@ -31,7 +31,6 @@ namespace Truco.Web.Hubs
                     Clients.All.mostrarnombre(jugador);
                 }
 
-
                 if (juego.VerificarDisponibilidad() == false)
                 {
                     foreach (var jugador in juego.Jugadores)
@@ -86,11 +85,41 @@ namespace Truco.Web.Hubs
                 {
                     if (accion == "envido" || accion == "envidoenvido" || accion == "faltaenvido" || accion == "realenvido")
                     {
-                        Clients.Client(jug.IdConexion).mostrarOpcionesEnvido();
+                        switch(accion)
+                        {
+                            case "envido":
+                                Clients.Client(jug.IdConexion).showEnvidoOptions();
+                                break;
+                            case "envidoenvido":
+                                Clients.Client(jug.IdConexion).showEnvidoEnvidoOptions();
+                                break;
+                            case "realenvido":
+                                Clients.Client(jug.IdConexion).showRealEnvidoOptions();
+                                break;
+                            default:
+                                Clients.Client(jug.IdConexion).showFaltaEnvidoOptions();
+                                break;
+                        }
+                        //Clients.Client(jug.IdConexion).mostrarOpcionesEnvido();                   
                     }
                     else
                     {
-                        Clients.Client(jug.IdConexion).mostrarOpcionesTruco();
+                        switch (accion)
+                        {
+                            case "truco":
+                                Clients.Client(jug.IdConexion).showTrucoOptions();
+                                break;
+                            case "retruco":
+                                Clients.Client(jug.IdConexion).showReTrucoOptions();
+                                Clients.Client(jug.IdConexion).hideTrucoOptions();
+                                break;                          
+                            default:
+                                Clients.Client(jug.IdConexion).showVale4Options();
+                                Clients.Client(jug.IdConexion).hideTrucoOptions();
+                                Clients.Client(jug.IdConexion).hideReTrucoOptions();
+                                break;
+                        }
+                        //Clients.Client(jug.IdConexion).mostrarOpcionesTruco();
                     }
                 }
             }
@@ -100,18 +129,44 @@ namespace Truco.Web.Hubs
                 {
                     if (accion == "envido" || accion == "envidoenvido" || accion == "faltaenvido" || accion == "realenvido")
                     {
-                        Clients.Client(jug.IdConexion).mostrarOpcionesEnvido();
-
+                        switch (accion)
+                        {
+                            case "envido":
+                                Clients.Client(jug.IdConexion).showEnvidoOptions();
+                                break;
+                            case "envidoenvido":
+                                Clients.Client(jug.IdConexion).showEnvidoEnvidoOptions();
+                                break;
+                            case "realenvido":
+                                Clients.Client(jug.IdConexion).showRealEnvidoOptions();
+                                break;
+                            default:
+                                Clients.Client(jug.IdConexion).showFaltaEnvidoOptions();
+                                break;
+                        }
+                        //Clients.Client(jug.IdConexion).mostrarOpcionesEnvido();                   
                     }
                     else
                     {
-                        Clients.Client(jug.IdConexion).mostrarOpcionesTruco();
+                        switch (accion)
+                        {
+                            case "truco":
+                                Clients.Client(jug.IdConexion).showTrucoOptions();
+                                break;
+                            case "retruco":
+                                Clients.Client(jug.IdConexion).showReTrucoOptions();
+                                break;
+                            default:
+                                Clients.Client(jug.IdConexion).showVale4Options();
+                                break;
+                        }
+                        //Clients.Client(jug.IdConexion).mostrarOpcionesTruco();
                     }
                 }
             }       
         }
 
-        //ACTUALIZA EN PANTALLA LOS PUNTAJES LUEGO DE JUGAR EL ENVIDO
+        //ACTUALIZA EN PANTALLA LOS PUNTAJES
         public void MostrarPuntajes() 
         {
             List<Jugador> Equipo1 = new List<Jugador>();
@@ -146,93 +201,108 @@ namespace Truco.Web.Hubs
         public void cantar(string accion)
         {
             //para evento
-            juego.OnGanador += new GanadorDelegate(Juego_OnGanador);
+            //juego.OnGanador += new GanadorDelegate(Juego_OnGanador);
 
             Jugador jugador = juego.ObtenerJugador(Context.ConnectionId);
 
             Clients.Client(jugador.IdConexion).deshabilitarMovimientos();
 
             // Si el juego termino... (acá quizá iria la implementación del evento, que se declara en donde ctualiza puntajes)
-            juego.OnGanador += new GanadorDelegate(Juego_OnGanador);
-            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(true); // GANADOR (debería ser al equipo)
-            Clients.Client(jugador.IdConexion).mostrarMensajeFinal(false); // PERDEDOR
-            Clients.All.deshabilitarMovimientos();
-            // Sino
-
-            //Clients.All.limpiarpuntos();
-            if (jugador.Turno)
+            //juego.OnGanador += new GanadorDelegate(Juego_OnGanador);
+            if (juego.TenemosGanador())
             {
+                //Clients.All.mostrarMensajeFinal(true); -> GANADOR
+                foreach (var jug in juego.Jugadores)
+                {
+                    if (jug.Equipo == juego.EquipoGanador)
+                    {
+
+                        Clients.Client(jug.IdConexion).mostrarMensajeFinalGanador("GANADOR"); // GANADOR (debería ser al equipo)
+                    }
+                    else
+                    {
+                        Clients.Client(jug.IdConexion).mostrarMensajeFinalGanador("PERDEDOR"); // PERDEDOR
+                    }
+                }
+                Clients.All.deshabilitarMovimientos();
+            }
+            // Sino
+            else
+            {
+                //Clients.All.limpiarpuntos();
+                if (jugador.Turno)
+                {
+                    switch (accion)
+                    {
+                        case "me voy al mazo": //que hace
+                            Repartir();
+                            HabilitarCartas();
+                            //Puntos para el otro equipo
+                            if (jugador.Equipo == 1)
+                            {
+                                juego.ActualizarPuntajes(2, accion);
+                            }
+                            else
+                            {
+                                juego.ActualizarPuntajes(1, accion);
+
+                            }
+                            MostrarPuntajes();
+                            break;
+                        case "envido":
+                            //permitir que solo puedan jugar los jugadores 3 y 4 de cada ronda
+                            Clients.All.hidemazo();
+                            SeleccionDelQuiero(jugador, accion);
+                            //para que no pueda jugar el envido antes de que juegue el 1 y 2                                                
+                            break;
+                        case "envidoenvido":
+                            Clients.All.hidemazo();
+                            SeleccionDelQuiero(jugador, accion);
+                            break;
+                        case "faltaenvido":
+                            Clients.All.hidemazo();
+                            SeleccionDelQuiero(jugador, accion);
+                            break;
+                        case "realenvido":
+                            Clients.All.hidemazo();
+                            SeleccionDelQuiero(jugador, accion);
+                            break;                                     
+                    }
+                    //MENSAJES
+                    string mensaje1 = "Jugador " + jugador.Nombre + " canto ACCION";
+                    Clients.Others.mostrarmensaje(mensaje1);
+                    Clients.Caller.mostrarmensaje("Yo cante ACCION");
+                }
+
+                //por que afuera del otro switch?
                 switch (accion)
                 {
-                    case "me voy al mazo": //que hace
-                        Repartir();
-                        HabilitarCartas();
-                        //Puntos para el otro equipo
-                        if (jugador.Equipo == 1)
-                        {
-                            juego.ActualizarPuntajes(2, accion);
-                        }
-                        else
-                        {
-                            juego.ActualizarPuntajes(1, accion);
-
-                        }
-                        MostrarPuntajes();
-                        break;
-                    case "envido":
-                        //permitir que solo puedan jugar los jugadores 3 y 4 de cada ronda
-                        Clients.All.hidemazo();
-                        SeleccionDelQuiero(jugador, accion);
-                        //para que no pueda jugar el envido antes de que juegue el 1 y 2                                                
-                        break;
-                    case "envidoenvido":
-                        Clients.All.hidemazo();
+                    case "truco":
                         SeleccionDelQuiero(jugador, accion);
                         break;
-                    case "faltaenvido":
-                        Clients.All.hidemazo();
+                    case "retruco":
                         SeleccionDelQuiero(jugador, accion);
                         break;
-                    case "realenvido":
-                        Clients.All.hidemazo();
+                    case "vale4":
                         SeleccionDelQuiero(jugador, accion);
                         break;
                 }
-                //MENSAJES
-                string mensaje1 = "Jugador " + jugador.Nombre + " canto ACCION";
-                Clients.Others.mostrarmensaje(mensaje1);
-                Clients.Caller.mostrarmensaje("Yo cante ACCION");
-            }
-            switch (accion)
-            {
-                case "truco":
-                    SeleccionDelQuiero(jugador, accion);
-                    break;
-                case "retruco":
-                    SeleccionDelQuiero(jugador, accion);
-                    break;
-                case "vale4":
-                    SeleccionDelQuiero(jugador, accion);
-                    break;
-            }
-            if (accion == "truco" || accion == "retruco" || accion == "vale4")
-            {
-                //MENSAJES
-                string mensaje = "Jugador " + jugador.Nombre + " canto ACCION";
-                Clients.Others.mostrarmensaje(mensaje);
-                Clients.Caller.mostrarmensaje("Yo cante ACCION");
-            }
-                       
+                if (accion == "truco" || accion == "retruco" || accion == "vale4")
+                {
+                    //MENSAJES
+                    string mensaje = "Jugador " + jugador.Nombre + " canto ACCION";
+                    Clients.Others.mostrarmensaje(mensaje);
+                    Clients.Caller.mostrarmensaje("Yo cante ACCION");
+                }
+            }                                
         }
 
+        //NO VA MAS SI NO USAMOS EL EVENTO
         private void Juego_OnGanador(object sender, GanadorEventArgs e)
         {
-            //crear alert con los datos del e
             string mensaje = "El equipo ganador es: " + e.Equipo + " , " + "sus puntos son: " + e.Puntos;
             Clients.All.mostrarMensajeFinalGanador(mensaje);
         }
-
-        // PARA ENVIDO FALTA ASIGNAR MANO -> VER
 
         public void EjecutarAccion(string accion, bool confirmacion)
         {
@@ -321,6 +391,8 @@ namespace Truco.Web.Hubs
             }
             else
             {
+                //ACTUALIZAR PUNTAJES DEL NO QUIERO
+
                 mensaje = "Jugador " + jugador.Nombre + " rechazo la ACCION";
                 Clients.All.mostrarmensaje(mensaje);
                 Clients.All.ocultarOpcionesEnvido();
@@ -370,7 +442,6 @@ namespace Truco.Web.Hubs
                 {
                     //juego.Puntajes(jugadorGanador); CAMBIE ESTO
                     juego.ActualizarPuntajes(jugadorGanador.Equipo, juego.AccionElegida);
-
 
                     foreach (var jugador in juego.Jugadores)
                     {

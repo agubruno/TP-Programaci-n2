@@ -23,6 +23,9 @@ namespace TrabajoPrácticoTRUCO.Entidades
         public Jugador ManoJugador { get; set; }
         public List<Mano> Manos { get; set; }
         private bool HayGanador { get; set; }
+
+        private int equipoGanador;
+        public int EquipoGanador { get { return equipoGanador; } }
         public string AccionElegida { get; set; }
         public int EquipoQueAceptoLaAccion { get; set; }
 
@@ -35,9 +38,27 @@ namespace TrabajoPrácticoTRUCO.Entidades
             Jugadores = new List<Jugador>();
             HayGanador = false;
             numeroDeRonda = 1;
-            tope = 2;
+            puntajesEquipo1 = 0;
+            puntajesEquipo2 = 0;
+            tope = 30;
         }
-   
+        //VALIDAR GANADOR
+        public bool TenemosGanador()
+        {
+            if (PuntajesEquipo1 >= tope)
+            {
+                HayGanador = true;
+                equipoGanador = 1;
+                return true;
+            }
+            if (PuntajesEquipo2 >= tope)
+            {
+                HayGanador = true;
+                equipoGanador = 2;
+                return true;
+            }
+            return false;
+        }
         //DEVUELVE EL MENSAJE CON EL GANADOR DEL ENVIDO Y CON LOS PUNTAJES DE TODOS LOS JUGADORES
         public List<string> Mensajes(Jugador GanadorEnvido) //PUEDE RECCIBIR COMO PARAMETRO QUE SE JUGO, ASÍ DETERMINA LOS PUNTAJES
         {
@@ -133,16 +154,16 @@ namespace TrabajoPrácticoTRUCO.Entidades
                         puntajesEquipo2 = puntajesEquipo2 + 4;
                     }
                     break;
-                //VER FALTA ENVIDO
                 default:
-                    //if (equipo == 1)
-                    //{
-                    //    PuntajesEquipo1 = PuntajesEquipo1 + 2;
-                    //}
-                    //else
-                    //{
-                    //    PuntajesEquipo2 = PuntajesEquipo2 + 2;
-                    break;
+                    if (equipo == 1)
+                    {
+                        puntajesEquipo1 = tope - PuntajesEquipo2;
+                    }
+                    else
+                    {
+                        puntajesEquipo2 = tope - PuntajesEquipo1;
+                    }
+                    break;             
             }
 
             if (PuntajesEquipo1 >= tope)

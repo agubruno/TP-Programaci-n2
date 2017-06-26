@@ -132,6 +132,10 @@ $(function () {
             bootbox.alert("PERDISTE!");
         }
     };
+    //FIN HECHO POR MI
+    trucoHub.client.mostrarMensajeFinalGanador = function (data) {
+        alert(data)
+    }
 
     //habilita la opcion del REtruco (ver como hacer para que se habilte cuando yo quiero) POR MI
     trucoHub.client.habilitarBotonesTruco1 = function () {
