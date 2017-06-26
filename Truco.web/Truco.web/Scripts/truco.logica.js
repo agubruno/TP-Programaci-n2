@@ -77,7 +77,7 @@ function Limpiar() {
     $("#cards").html("");
 
     // Volteamos las cartas de la mesa.
-    $("[id*=user][id*=card]").attr("src", "Images/BACK2.JPG");
+    $("[id*=user][id*=card]").attr("src", "Images/BACK.JPG");
 }
 
 // Inicializamos los componentes.
