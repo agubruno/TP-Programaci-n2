@@ -338,7 +338,7 @@ $(function () {
     trucoHub.client.mostrarCarta = function (carta, nombreInterno, cartaElegida) {
         var selector = "#" + nombreInterno + "_card" + cartaElegida;
         $(carta.Selector).attr("src", "");        
-        $(selector).attr("src", carta.Imagen1);
+        $(selector).attr("src", carta.Imagen2);
     };
 
     trucoHub.client.mostrarCartas = function (data) {
@@ -350,7 +350,7 @@ $(function () {
                 console.log(value);
                 var img = $("<img width='100' />").attr({
                     'id': value.Codigo,
-                    'src':value.Imagen1, 
+                    'src':value.Imagen2, 
                     'alt': value.Codigo,
                     'cc': value.Codigo
                 }).appendTo($("#cards"));
